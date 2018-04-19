@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Auto-fill Memo-cash password
 // @namespace    https://tampermonkey.net/
-// @version      0.3.2
+// @version      0.3.3
 // @description  Auto-fill Memo.cash Password with Tampermonkey for Chrome
 // @author       Andreas Brekken: https://memo.cash/profile/149o1esm1LrYEy1DizZgxANSppx3FESHKw
 // @match        https://memo.cash/*
