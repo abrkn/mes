@@ -61,6 +61,15 @@ $(() => {
     const txHash = href.match(/[^\/\?]+$/)[0];
     const { memoPassword: password } = localStorage;
 
+    const tipText = prompt('How much tip in satoshis? (Blank=0)', '0');
+
+    if (tipText === null) {
+      return false;
+    }
+
+    // A zero tip is sent as blank
+    const tip = (+tipText || '').toString();
+
     $a.text('Liking Memo...');
     $a.css('background-color', '#544c40');
 
@@ -90,7 +99,7 @@ $(() => {
         const req = {
           method: 'POST',
           url: 'https://memo.cash/memo/like-submit',
-          data: `txHash=${txHash}&tip=&password=${password}`,
+          data: `txHash=${txHash}&tip=${tip}&password=${password}`,
           onerror: error => reject(error),
           overrideMimeType: 'application/x-www-form-urlencoded; charset=UTF-8',
           headers: {
