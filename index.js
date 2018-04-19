@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Auto-fill Memo-cash password
 // @namespace    https://tampermonkey.net/
-// @version      0.3.0
+// @version      0.3.1
 // @description  Auto-fill Memo.cash Password with Tampermonkey for Chrome
 // @author       Andreas Brekken: https://memo.cash/profile/149o1esm1LrYEy1DizZgxANSppx3FESHKw
 // @match        https://memo.cash/*
@@ -22,12 +22,16 @@ $(() => {
       });
   });
 
-  // Only tip in integers with a minimum of what is stated: "(min. 123)"
-  $('input#tip').attr({
-    type: 'number',
-    pattern: 'd*',
-    min: $('#form-memo-like label[for="tip"]')
-      .text()
-      .match(/(\d+)\)/)[1],
-  });
+  const $formMemoLike = $('#form-memo-like');
+
+  if ($formMemoLike.length) {
+    // Only tip in integers with a minimum of what is stated: "(min. 123)"
+    $formMemoLike.find('input#tip').attr({
+      type: 'number',
+      pattern: 'd*',
+      min: $('#form-memo-like label[for="tip"]')
+        .text()
+        .match(/(\d+)\)/)[1],
+    });
+  }
 });
