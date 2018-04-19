@@ -8,7 +8,8 @@
 // @grant        none
 // ==/UserScript==
 
-$(() =>
+$(() => {
+  // Remember password
   $('[type="password"]').each((_, password) => {
     // Load
     $(password).val(localStorage.memoPassword || '');
@@ -16,6 +17,8 @@ $(() =>
     // Save
     $(password)
       .closest('form')
-      .submit(() => (localStorage.memoPassword = $(password).val()));
-  })
-);
+      .submit(() => {
+        localStorage.memoPassword = $(password).val();
+      });
+  });
+});
