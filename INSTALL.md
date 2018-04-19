@@ -4,6 +4,8 @@ This guide is for Chrome. The script is most likely compatible with Firefox, but
 
 If you encounter any problems, please [file an issue on the Github](https://github.com/abrkn/tampermonkey-autofill-memo-password/issues/new). Registering for a Github account is free and easy.
 
+Keep this guide open. Don't click things randomly. Just return to this guide.
+
 I recommend opening links from this guide in a new tab.
 
 ## Install Tampermonkey
