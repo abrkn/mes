@@ -8,7 +8,30 @@
 // @grant        GM_xmlhttpRequest
 // ==/UserScript==
 
+const THUMBS_UP = '👍';
+
 $(() => {
+  // Add CSS
+  $(`
+    <style>
+      .is-disabled,
+      .post.is-liking .actions .like-button,
+      .post.is-liked .actions .like-button
+      {
+        pointer-events: none;
+        cursor: not-allowed;
+      }
+
+      .post.is-liking .actions .like-button {
+        background-color: rgba(84,141,29,0.75);
+      }
+
+      .post.is-liked .actions .like-button {
+        background-color: rgba(0,0,0,0.2);
+      }
+    </style>
+  `).appendTo('head');
+
   // Remember password
   $('[type="password"]').each((_, password) => {
     // Load
@@ -54,9 +77,13 @@ $(() => {
     );
   });
 
+  // Add missing css class to "Like Memo" buttons
+  $(`.post .actions a[href^='memo/like']`).addClass('like-button');
+
   // In-line-comment
-  $(`.post .actions a[href^='memo/like']`).click(e => {
+  $(`.post .actions .like-button`).click(e => {
     const $a = $(e.target);
+    const $post = $a.closest('.post');
     const href = $a.attr('href');
     const txHash = href.match(/[^\/\?]+$/)[0];
     const { memoPassword: password } = localStorage;
@@ -71,7 +98,7 @@ $(() => {
     const tip = (+tipText || '').toString();
 
     $a.text('Liking Memo...');
-    $a.css('background-color', '#544c40');
+    $post.addClass('is-liking');
 
     const fetchLikePageAndGetCsrf = () =>
       new Promise((resolve, reject) => {
@@ -122,11 +149,12 @@ $(() => {
       .then(fetchLikePageAndGetCsrf)
       .then(likePost)
       .then(() => {
-        $a.text('Liked Memo!');
-        $a.attr('disabled', 'true');
-        $a.css('background-color', 'rgb(0, 0, 0, 0.2)');
+        $post.removeClass('is-liking');
+        $post.addClass('is-liked');
+        $a.text(`${THUMBS_UP} Liked Memo!`);
       })
       .catch(error => {
+        $post.removeClass('is-liking');
         console.error('oops');
         console.error(error, error.stack || error.message);
       });
