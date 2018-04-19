@@ -9,7 +9,7 @@ I recommend opening links from this guide in a new tab.
 ## Install Tampermonkey
 
 * Browse to [Tampermonkey extension in the Chrome Web Store](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=en)
-* Click the blue **+ Add to Chrome button**
+* Click the blue **+ Add to Chrome button** and choose Add. **IMPORTANT: After install. close the Tampermonkey tab and return to this guide**
 
 ## Open the Tampermonkey dashboard
 
@@ -21,17 +21,17 @@ Click **Dashboard**
 
 ![](https://i.gyazo.com/daf2429531954320db2f988cdbff6c99.png)
 
-Click **Utilities**
-
-![](https://i.gyazo.com/93d23e5130cedbc9f62f1af8b414bb3c.png)
-
-Scroll to the bottom
-
 Copy this to your clipboard (CTRL+C or CMD+C)
 
 ```
 https://github.com/abrkn/tampermonkey-autofill-memo-password/raw/master/index.js
 ```
+
+Click **Utilities**
+
+![](https://i.gyazo.com/93d23e5130cedbc9f62f1af8b414bb3c.png)
+
+Scroll to the bottom
 
 Paste into the textbox next to **URL** (CTRL+V or CMD+V) and click **Import**
 
