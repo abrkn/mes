@@ -21,4 +21,13 @@ $(() => {
         localStorage.memoPassword = $(password).val();
       });
   });
+
+  // Only tip in integers with a minimum of what is stated: "(min. 123)"
+  $('input#tip').attr({
+    type: 'number',
+    pattern: 'd*',
+    min: $('#form-memo-like label[for="tip"]')
+      .text()
+      .match(/(\d+)\)/)[1],
+  });
 });
