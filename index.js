@@ -9,6 +9,21 @@
 // ==/UserScript==
 
 const THUMBS_UP = '👍';
+const HOURGLASS = '⌛';
+const MES_STORAGE_KEY = 'mes-7932a97f';
+
+const state = JSON.parse(localStorage[MES_STORAGE_KEY] || '{}');
+
+// Defaults for state
+Object.assign(state, {
+  likedPosts: state.likedPosts || {},
+});
+
+console.log({ state });
+
+const saveState = () => {
+  localStorage[MES_STORAGE_KEY] = JSON.stringify(state, null, 2);
+};
 
 $(() => {
   // Add CSS
@@ -28,6 +43,19 @@ $(() => {
 
       .post.is-liked .actions .like-button {
         background-color: rgba(0,0,0,0.2);
+      }
+
+      /* "Like Memo" button texts */
+      .post .actions .like-button:after {
+        content: "Like Memo";
+      }
+
+      .post.is-liking .actions .like-button:after {
+        content: "${HOURGLASS} Liking Memo...";
+      }
+
+      .post.is-liked .actions .like-button:after {
+        content: "${THUMBS_UP} Liked Memo!";
       }
     </style>
   `).appendTo('head');
@@ -80,12 +108,32 @@ $(() => {
   // Add missing css class to "Like Memo" buttons
   $(`.post .actions a[href^='memo/like']`).addClass('like-button');
 
+  // Add data-txhash to posts
+  $(`.post .actions .like-button`).each((_, a) => {
+    const $a = $(a);
+    const $post = $a.closest('.post');
+    const href = $a.attr('href');
+    const txhash = href.match(/[^\/\?]+$/)[0];
+    $post.attr('data-txhash', txhash);
+  });
+
+  // Remove "Like Memo", which will be done by CSS instead
+  $(`.post .actions .like-button`).html('');
+
+  // Restore likes
+  $('.post[data-txhash]').each((_, post) => {
+    const $post = $(post);
+    const txhash = $post.attr('data-txhash');
+
+    $post.toggleClass('is-liked', !!state.likedPosts[txhash]);
+  });
+
   // In-line-comment
   $(`.post .actions .like-button`).click(e => {
     const $a = $(e.target);
     const $post = $a.closest('.post');
     const href = $a.attr('href');
-    const txHash = href.match(/[^\/\?]+$/)[0];
+    const txHash = href.match(/[^\/\?]+$/)[0]; // TODO: Duplicate
     const { memoPassword: password } = localStorage;
 
     const tipText = prompt('How much tip in satoshis? (Blank=0)', '0');
@@ -97,7 +145,6 @@ $(() => {
     // A zero tip is sent as blank
     const tip = (+tipText || '').toString();
 
-    $a.text('Liking Memo...');
     $post.addClass('is-liking');
 
     const fetchLikePageAndGetCsrf = () =>
@@ -136,6 +183,18 @@ $(() => {
           },
           onload: res => {
             console.log(res);
+
+            const prevTip = state.likedPosts[txHash]
+              ? state.likedPosts[txHash].tip || 0
+              : 0;
+
+            state.likedPosts[txHash] = {
+              timestamp: +new Date(),
+              tip: prevTip + +tip,
+            };
+
+            saveState();
+
             resolve(res.responseText);
           },
         };
@@ -151,7 +210,6 @@ $(() => {
       .then(() => {
         $post.removeClass('is-liking');
         $post.addClass('is-liked');
-        $a.text(`${THUMBS_UP} Liked Memo!`);
       })
       .catch(error => {
         $post.removeClass('is-liking');
