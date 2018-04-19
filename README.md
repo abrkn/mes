@@ -2,6 +2,8 @@
 
 [Click here to install](INSTALL.md)
 
+![](https://i.imgur.com/iyw7CCo.gif)
+
 ## About
 
 Makes Memo.cash more awesome.
