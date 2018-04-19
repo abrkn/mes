@@ -26,7 +26,7 @@ Click **Dashboard**
 Copy this to your clipboard (CTRL+C or CMD+C)
 
 ```
-https://github.com/abrkn/tampermonkey-autofill-memo-password/raw/master/index.js
+https://github.com/abrkn/mes/raw/master/index.js
 ```
 
 Click **Utilities**

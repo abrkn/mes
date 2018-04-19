@@ -1,10 +1,15 @@
-# "Remember password" for Memo
+# Memo Enhancement Suite (MES)
 
 [Click here to install](INSTALL.md)
 
 ## About
 
-This is a Tampermonkey plugin that remembers your password on Memo.cash.
+Makes Memo.cash more awesome.
+
+## Features
+
+* Auto expand images and gifs
+* Remember password
 
 ## Is it dangerous?
 
@@ -12,7 +17,7 @@ Your password is stored in plain text in the browser's `localStorage`. It's prob
 
 ## Technology
 
-8 lines of JavaScript (jQuery, because it was already injected)
+Not much at all
 
 ## Author
 
