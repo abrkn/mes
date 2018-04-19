@@ -4,7 +4,7 @@ This is a Tampermonkey script to auto-fill your password on Memo.cash.
 
 ## Installation
 
-Read the [Installation Guide](INSTALL.md)
+[Click here to install](INSTALL.md)
 
 ## Author
 
