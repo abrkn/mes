@@ -105,11 +105,11 @@ $(() => {
     box-sizing: border-box;
 }
 
-body .btn-leave {
+html body .btn-leave {
     background: #b5b5b5;
 }
 
-body .btn-leave:hover, .btn-leave:focus {
+html body .btn-leave:hover, html body .btn-leave:focus {
     background: #999;
 }
 
@@ -118,7 +118,7 @@ body .btn:hover, .btn:focus {
 }
 
 body table {
-    margin: 0 auto;
+    margin: 65px auto 0;
 }
 
 body table.table td {
@@ -144,6 +144,9 @@ body ul li {
     margin: 5px;
 }
 
+h2 {
+  margin-bottom:65px;
+}
 
 body .btn, .btn-primary.btn-block, body input[type=submit].btn {
     background: #99c261;
@@ -330,6 +333,10 @@ body > p:nth-child(9) > a.btn:nth-child(2) {
     width: 400px;
     margin: 10px auto;
     background: #618b32;
+    position:absolute;
+    top:175px;
+    left:50%;
+    margin-left:-200px;
 }
 
 body > p:nth-child(9) > a.btn:nth-child(1) {
