@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MES
 // @namespace    https://tampermonkey.net/
-// @version      0.3.6
+// @version      0.3.8
 // @description  Memo Enhancement Suite
 // @author       Andreas Brekken: https://memo.cash/profile/149o1esm1LrYEy1DizZgxANSppx3FESHKw
 // @match        https://memo.cash/*
@@ -13,6 +13,75 @@ const HOURGLASS = '⌛';
 const MES_STORAGE_KEY = 'mes-7932a97f';
 
 const state = JSON.parse(localStorage[MES_STORAGE_KEY] || '{}');
+
+const fetchTmXhr = req =>
+  new Promise((resolve, reject) => {
+    if (!req.url.match(/^http/)) {
+      req.url = `https://memo.cash/${req.url}`;
+    }
+
+    console.log(`Fetching ${req.url} to get CSRF...`);
+
+    GM_xmlhttpRequest(
+      Object.assign(
+        {
+          method: req.data ? 'POST' : 'GET',
+          ...(req.data
+            ? {
+                overrideMimeType:
+                  'application/x-www-form-urlencoded; charset=UTF-8',
+              }
+            : {}),
+          headers: {
+            ...(req.csrf ? { 'x-csrf-token': `${req.csrf}` } : {}),
+            // ...(req.data ? { referer: req.url } : {}),
+          },
+          onerror: error => reject(error),
+          onload: res => {
+            const { readyState, responseText } = res;
+
+            if (res.readyState !== 4) {
+              reject(
+                `readyState=${readyState}; responseText: ${responseText || ''}`
+              );
+              return;
+            }
+
+            console.log(`Fetched ${req.url}`);
+
+            resolve(responseText);
+          },
+        },
+        req
+      )
+    );
+  });
+
+const fetchCsrf = url =>
+  fetchTmXhr({ url }).then(text => text.match(/MemoApp.InitCsrf."([^"]+)/)[1]);
+
+const likePostInBackground = async (txhash, tip = 0) => {
+  const { memoPassword: password } = localStorage;
+  const csrf = await fetchCsrf(`memo/like/${txhash}`);
+  const tipForQuery = (+tip || '').toString();
+
+  await fetchTmXhr({
+    url: 'memo/like-submit',
+    data: `txHash=${txhash}&tip=${tipForQuery}&password=${password}`,
+    csrf,
+  });
+
+  const prevTip = state.likedPosts[txhash]
+    ? state.likedPosts[txhash].tip || 0
+    : 0;
+
+  state.likedPosts[txhash] = {
+    timestamp: +new Date(),
+    tip: prevTip + +tip,
+  };
+
+  saveState();
+};
 
 // Defaults for state
 Object.assign(state, {
@@ -29,47 +98,84 @@ $(() => {
   // Add CSS
   $(`
     <style>
-      .is-disabled,
-      .post.is-liking .actions .like-button,
-      .post.is-liked .actions .like-button
-      {
-        pointer-events: none;
-        cursor: not-allowed;
+      body #profile-search {
+          background: #eee;
+          border: 0;
+          border-radius: 0;
+          font-size: 20px;
+          height: 45px;
+          margin: 5px auto 0;
+          max-width: 100%;
+          padding: 5px 10px;
+          text-align: center;
+          width: 600px;
       }
 
-      .post.is-liking .actions .like-button {
-        background-color: rgba(84,141,29,0.75);
+      * {
+          box-sizing: border-box;
+      }
+
+      .is-disabled, .post.is-liking .actions .like-button, .post.is-liked .actions .like-button {
+          cursor: not-allowed;
+          pointer-events: none;
+      }
+
+      .post .actions .like-button:after {
+          content: "Like Memo";
       }
 
       .post.is-liked .actions .like-button {
-        background-color: rgba(0,0,0,0.2);
-      }
-
-      /* "Like Memo" button texts */
-      .post .actions .like-button:after {
-        content: "Like Memo";
-      }
-
-      .post.is-liking .actions .like-button:after {
-        content: "${HOURGLASS} Liking Memo...";
+          background-color: rgba(0,0,0,0.2);
       }
 
       .post.is-liked .actions .like-button:after {
-        content: "${THUMBS_UP} Liked Memo!";
+          content: "${THUMBS_UP} Liked Memo!";
       }
 
-      body .btn {
+      .post.is-liking .actions .like-button {
+          background-color: rgba(84,141,29,0.75);
+      }
+
+      .post.is-liking .actions .like-button:after {
+          content: "${HOURGLASS} Liking Memo...";
+      }
+
+      body #profile-list {
+          align-item: flex-end;
+          display: flex;
+          flex-flow: row wrap;
+          justify-content: space-around;
+      }
+
+      body #profile-list .btn {
+          background: #c2c2c2;
+          border-radius: 3px;
+          color: white;
+          height: 150px;
+          line-height: 150px;
+          margin: 2px;
+          padding: 5px;
+          text-align: center;
+          width: 211px;
+          word-break: break-all;
+      }
+
+      body #profile-list .btn:hover, body #profile-list .btn:focus {
+          background: #777;
+      }
+
+      body #profile-list p {
+          margin: 0;
+      }
+
+      body .btn, .btn-primary.btn-block {
           background: #99c261;
           border: 0;
           border-radius: 50px;
           color: #fff;
-          padding: 8px 12px;
           margin: 5px 0;
+          padding: 8px 12px;
           transition: background-color 0.25s ease;
-      }
-
-      body .btn:hover, .btn:focus {
-          background: #bfe498;
       }
 
       body .btn-leave {
@@ -78,6 +184,68 @@ $(() => {
 
       body .btn-leave:hover, .btn-leave:focus {
           background: #999;
+      }
+
+      body .btn:hover, .btn:focus {
+          background: #bfe498;
+      }
+
+      body .header h1 {
+          display: block;
+          margin: 15px 0;
+          text-align: center;
+      }
+
+      body .header, body {
+          text-align: center;
+      }
+
+      body .message {
+          font-family: helvetica, arial, sans-serif;
+          font-size: 21px;
+          line-height: 1.3;
+          padding: 5px;
+      }
+
+      body .message a {
+          color: #a1c16d;
+      }
+
+      body .post {
+          padding: 0;
+      }
+
+      body .post .name {
+          background: #fff;
+          border-radius: 15px 15px 0 0;
+          margin: 0;
+          padding: 10px;
+          color:#222
+      }
+
+      body > div.header > div > a:nth-child(4) {
+          background: none;
+          color: #618b32;
+          position: absolute;
+          right: 95px;
+          top: 0;
+      }
+
+      body > div.header > div > a:nth-child(4):hover, body > div.header > div > a:nth-child(5):hover {
+          color: #222;
+      }
+
+      body > div.header > div > a:nth-child(5) {
+          background: none;
+          color: #618b32;
+          position: absolute;
+          right: 0;
+          top: 0;
+      }
+
+      body label[for=profile-search] {
+          display: block;
+          margin: 0;
       }
 
       body table {
@@ -94,51 +262,28 @@ $(() => {
           border-radius: 0;
       }
 
-      body .header h1 {
-          display: block;
-          text-align: center;
-          margin: 15px 0;
-      }
-
-      body .header, body {
-          text-align: center;
-      }
-
-      body .post {
-          box-shadow: none;
-          border: 1px solid #ddd;
-          background: #eee;
-          margin: 25px auto;
-      }
-
-      body #profile-list .btn {
-          border-radius: 0;
-          background: #999;
-          padding: 5px;
-          width: 200px;
-          height: 150px;
-          margin-top: 10px;
-          line-height: 150px;
-          color: white;
-          text-align: center;
-          word-break: break-all;
-      }
-
-      body #profile-list p {
+      body ul {
           margin: 0;
       }
 
-      * {
-          box-sizing: border-box;
+      body ul li {
+          display: inline-block;
+          list-style: none;
+          margin: 5px;
       }
 
-      body #profile-list {
-          display: flex;
-          flex-flow: row wrap;
-          align-item: flex-end;
-          justify-content: space-around;
+      body input[type=text], body input[type=password] {
+          background: #eee;
+          border: 0;
+          border-radius: 0;
+          height: 35px;
       }
 
+      body #form-signup {
+          padding: 10px 0;
+      }
+
+      /* "Like Memo" button texts */
 
     </style>
   `).appendTo('head');
@@ -216,7 +361,7 @@ $(() => {
     const $a = $(e.target);
     const $post = $a.closest('.post');
     const href = $a.attr('href');
-    const txHash = href.match(/[^\/\?]+$/)[0]; // TODO: Duplicate
+    const txhash = href.match(/[^\/\?]+$/)[0]; // TODO: Duplicate
     const { memoPassword: password } = localStorage;
 
     const tipText = prompt('How much tip in satoshis? (Blank=0)', '0');
@@ -225,71 +370,9 @@ $(() => {
       return false;
     }
 
-    // A zero tip is sent as blank
-    const tip = (+tipText || '').toString();
-
     $post.addClass('is-liking');
 
-    const fetchLikePageAndGetCsrf = () =>
-      new Promise((resolve, reject) => {
-        const url = 'https://memo.cash/' + href;
-
-        console.log(`Fetching like page to get CSRF at ${url}...`);
-
-        const res = GM_xmlhttpRequest({
-          method: 'GET',
-          url,
-          onerror: error => reject(error),
-          onload: res => {
-            console.log(res);
-            console.log(res.responseText);
-            const csrf = res.responseText.match(/MemoApp.InitCsrf."([^"]+)/)[1];
-            resolve(csrf);
-          },
-        });
-      });
-
-    const likePost = csrf =>
-      new Promise((resolve, reject) => {
-        console.log({ csrf });
-
-        const req = {
-          method: 'POST',
-          url: 'https://memo.cash/memo/like-submit',
-          data: `txHash=${txHash}&tip=${tip}&password=${password}`,
-          onerror: error => reject(error),
-          overrideMimeType: 'application/x-www-form-urlencoded; charset=UTF-8',
-          headers: {
-            'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
-            'x-csrf-token': `${csrf}`,
-            referer: `${href}`,
-          },
-          onload: res => {
-            console.log(res);
-
-            const prevTip = state.likedPosts[txHash]
-              ? state.likedPosts[txHash].tip || 0
-              : 0;
-
-            state.likedPosts[txHash] = {
-              timestamp: +new Date(),
-              tip: prevTip + +tip,
-            };
-
-            saveState();
-
-            resolve(res.responseText);
-          },
-        };
-
-        console.log({ req });
-
-        const res = GM_xmlhttpRequest(req);
-      });
-
-    Promise.resolve(1)
-      .then(fetchLikePageAndGetCsrf)
-      .then(likePost)
+    likePostInBackground(txhash, tipText)
       .then(() => {
         $post.removeClass('is-liking');
         $post.addClass('is-liked');
