@@ -178,6 +178,16 @@ $(() => {
           transition: background-color 0.25s ease;
       }
 
+      body textarea, input[type=text], input[type=password] {
+       background:#eee;
+       border:0;
+       border-radius:0;
+       padding:5px 10px;
+       font-size:19px;
+       line-height:1.4;
+       
+      }
+
       body .btn-leave {
           background: #b5b5b5;
       }
