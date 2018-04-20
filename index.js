@@ -22,39 +22,53 @@ const fetchTmXhr = req =>
 
     console.log(`Fetching ${req.url} to get CSRF...`);
 
-    GM_xmlhttpRequest(
-      Object.assign(
-        {
-          method: req.data ? 'POST' : 'GET',
-          ...(req.data
-            ? {
-                overrideMimeType:
-                  'application/x-www-form-urlencoded; charset=UTF-8',
-              }
-            : {}),
-          headers: {
-            ...(req.csrf ? { 'x-csrf-token': `${req.csrf}` } : {}),
-            // ...(req.data ? { referer: req.url } : {}),
-          },
-          onerror: error => reject(error),
-          onload: res => {
-            const { readyState, responseText } = res;
+    const onerror = error => reject(error);
 
-            if (res.readyState !== 4) {
-              reject(
-                `readyState=${readyState}; responseText: ${responseText || ''}`
-              );
-              return;
-            }
+    const onload = res => {
+      const { readyState, responseText, status } = res;
 
-            console.log(`Fetched ${req.url}`);
+      if (res.readyState !== 4) {
+        reject(
+          new Error(
+            `readyState=${readyState}; responseText: ${responseText ||
+              '<none>'}`
+          )
+        );
+        return;
+      }
 
-            resolve(responseText);
-          },
+      if (!(status >= 200 && status < 300)) {
+        reject(
+          new Error(
+            `HTTP Status=${status || '<none>'}; responseText: ${responseText ||
+              '<none>'}`
+          )
+        );
+        return;
+      }
+
+      console.log(`Fetched ${req.url}`);
+
+      resolve(responseText);
+    };
+
+    const contentType = 'application/x-www-form-urlencoded; charset=UTF-8';
+
+    const reqToSend = Object.assign(
+      {
+        method: req.data ? 'POST' : 'GET',
+        headers: {
+          ...(req.csrf ? { 'x-csrf-token': `${req.csrf}` } : {}),
+          ...(req.data ? { referer: req.url } : {}),
+          'content-type': contentType,
         },
-        req
-      )
+        onerror,
+        onload,
+      },
+      req
     );
+
+    GM_xmlhttpRequest(reqToSend);
   });
 
 const fetchCsrf = url =>
@@ -303,8 +317,7 @@ $(() => {
       })
       .catch(error => {
         $post.removeClass('is-liking');
-        console.error('oops');
-        console.error(error, error.stack || error.message);
+        alert(`Failed to like: ${error.message || error.stack || error}!`);
       });
 
     return false;
