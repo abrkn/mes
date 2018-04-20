@@ -18,7 +18,7 @@ Makes Memo.cash more awesome.
 
 ![](https://i.gyazo.com/1bf2bc325b22e62bc552f98256bda362.gif)
 
-### Remmbers what you've liked
+### Remembers what you've liked
 
 ![](https://i.gyazo.com/4e82580216383fb5cc4d9b6a23c750f0.gif)
 
