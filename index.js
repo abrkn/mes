@@ -58,52 +58,53 @@ $(() => {
         content: "${THUMBS_UP} Liked Memo!";
       }
 
-      .btn {
+      body .btn {
           background: #99c261;
           border: 0;
           border-radius: 50px;
           color: #fff;
           padding: 8px 12px;
           margin: 5px 0;
+          transition: background-color 0.25s ease;
       }
 
-      .btn:hover, .btn:focus {
+      body .btn:hover, .btn:focus {
           background: #bfe498;
       }
 
-      .btn-leave {
+      body .btn-leave {
           background: #b5b5b5;
       }
 
-      .btn-leave:hover, .btn-leave:focus {
+      body .btn-leave:hover, .btn-leave:focus {
           background: #999;
       }
 
-      table {
+      body table {
           margin: 0 auto;
       }
 
-      table.table td {
+      body table.table td {
           border-radius: 0px;
           margin: 5px;
           padding: 20px;
       }
 
-      table.table th {
+      body table.table th {
           border-radius: 0;
       }
 
-      .header h1 {
+      body .header h1 {
           display: block;
           text-align: center;
           margin: 15px 0;
       }
 
-      .header, body {
+      body .header, body {
           text-align: center;
       }
 
-      .post {
+      body .post {
           box-shadow: none;
           border: 1px solid #ddd;
           background: #eee;
