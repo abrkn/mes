@@ -57,6 +57,34 @@ const fetchTmXhr = req =>
     );
   });
 
+const fetchCsrf = url =>
+  fetchTmXhr({
+    url,
+  }).then(text => text.match(/MemoApp.InitCsrf."([^"]+)/)[1]);
+
+const likePostInBackground = async (txhash, tip = 0) => {
+  const { memoPassword: password } = localStorage;
+  const csrf = await fetchCsrf(`memo/like/${txhash}`);
+  const tipForQuery = (+tip || '').toString();
+
+  await fetchTmXhr({
+    url: 'memo/like-submit',
+    data: `txHash=${txhash}&tip=${tipForQuery}&password=${password}`,
+    csrf,
+  });
+
+  const prevTip = state.likedPosts[txhash]
+    ? state.likedPosts[txhash].tip || 0
+    : 0;
+
+  state.likedPosts[txhash] = {
+    timestamp: +new Date(),
+    tip: prevTip + +tip,
+  };
+
+  saveState();
+};
+
 // Defaults for state
 Object.assign(state, {
   likedPosts: state.likedPosts || {},
@@ -259,7 +287,7 @@ $(() => {
     const $a = $(e.target);
     const $post = $a.closest('.post');
     const href = $a.attr('href');
-    const txHash = href.match(/[^\/\?]+$/)[0]; // TODO: Duplicate
+    const txhash = href.match(/[^\/\?]+$/)[0]; // TODO: Duplicate
     const { memoPassword: password } = localStorage;
 
     const tipText = prompt('How much tip in satoshis? (Blank=0)', '0');
@@ -268,38 +296,9 @@ $(() => {
       return false;
     }
 
-    // A zero tip is sent as blank
-    const tip = (+tipText || '').toString();
-
     $post.addClass('is-liking');
 
-    const fetchLikePageAndGetCsrf = () =>
-      fetchTmXhr({
-        url: href,
-      }).then(text => text.match(/MemoApp.InitCsrf."([^"]+)/)[1]);
-
-    const likePost = async csrf => {
-      await fetchTmXhr({
-        url: 'memo/like-submit',
-        data: `txHash=${txHash}&tip=${tip}&password=${password}`,
-        csrf,
-      });
-
-      const prevTip = state.likedPosts[txHash]
-        ? state.likedPosts[txHash].tip || 0
-        : 0;
-
-      state.likedPosts[txHash] = {
-        timestamp: +new Date(),
-        tip: prevTip + +tip,
-      };
-
-      saveState();
-    };
-
-    Promise.resolve(1)
-      .then(fetchLikePageAndGetCsrf)
-      .then(likePost)
+    likePostInBackground(txhash, tipText)
       .then(() => {
         $post.removeClass('is-liking');
         $post.addClass('is-liked');
