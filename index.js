@@ -191,7 +191,14 @@ $(() => {
           box-shadow: none;
           border: 1px solid #ddd;
           background: #eee;
+          border-radius: 4px;
+          max-width: 888px;
+          text-align: left;
           margin: 25px auto;
+      }
+
+      body .post .btn-leave {
+          float: right;
       }
 
       body #profile-list .btn {
