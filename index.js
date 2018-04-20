@@ -145,7 +145,7 @@ body ul li {
 }
 
 
-body .btn, .btn-primary.btn-block {
+body .btn, .btn-primary.btn-block, body input[type=submit].btn {
     background: #99c261;
     border: 0;
     border-radius: 50px;
