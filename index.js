@@ -330,6 +330,12 @@ body > p:nth-child(9) > a.btn:nth-child(1) {
     background: #888;
 }
 
+/* Footer */
+
+body > a.btn:nth-child(25), body > a.btn:nth-child(26), body > a.btn:nth-child(27) {
+  background:#ccc;
+}
+
   /* "Like Memo" button texts */
 
     </style>
