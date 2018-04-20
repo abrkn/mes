@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         MES
 // @namespace    https://tampermonkey.net/
-// @version      0.3.6
+// @version      0.3.7
 // @description  Memo Enhancement Suite
 // @author       Andreas Brekken: https://memo.cash/profile/149o1esm1LrYEy1DizZgxANSppx3FESHKw
 // @match        https://memo.cash/*
