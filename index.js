@@ -179,13 +179,12 @@ $(() => {
       }
 
       body textarea, input[type=text], input[type=password] {
-       background:#eee;
-       border:0;
-       border-radius:0;
-       padding:5px 10px;
-       font-size:19px;
-       line-height:1.4;
-       
+          background: #eee;
+          border: 0;
+          border-radius: 0;
+          padding: 5px 10px;
+          font-size: 19px;
+          line-height: 1.4;
       }
 
       body .btn-leave {
@@ -215,14 +214,15 @@ $(() => {
           font-size: 21px;
           line-height: 1.3;
           padding: 5px 10px;
-          
       }
+
       html .post {
-       margin:20px auto !important;
-       box-shadow:none;
-       border:1px solid #ddd;
-       background:#eee;
+          margin: 20px auto ;
+          box-shadow: none;
+          border: 1px solid #ddd;
+          background: #eee;
       }
+
       body .message a {
           color: #a1c16d;
       }
@@ -236,7 +236,8 @@ $(() => {
           border-radius: 15px 15px 0 0;
           margin: 0;
           padding: 10px;
-          color:#222
+          color: #222
+            ;
       }
 
       body > div.header > div > a:nth-child(4) {
@@ -274,6 +275,9 @@ $(() => {
           padding: 20px;
       }
 
+      html hr {
+      border:1px solid #eee;
+      }
       body table.table th {
           border-radius: 0;
       }
@@ -300,19 +304,20 @@ $(() => {
       }
 
       body > p:nth-child(9) > a.btn:nth-child(2) {
-          display:block;
-          width:400px;
-          margin:10px auto;
-          background:#618b32;
+          display: block;
+          width: 400px;
+          margin: 10px auto;
+          background: #618b32;
       }
 
       body > p:nth-child(9) > a.btn:nth-child(1) {
-          display:block;
-          width:400px;
-          margin:10px auto;
-          background:#888
-          
+          display: block;
+          width: 400px;
+          margin: 10px auto;
+          background: #888;
       }
+
+
 
       /* "Like Memo" button texts */
 
