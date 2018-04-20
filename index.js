@@ -214,9 +214,15 @@ $(() => {
           font-family: helvetica, arial, sans-serif;
           font-size: 21px;
           line-height: 1.3;
-          padding: 5px;
+          padding: 5px 10px;
+          
       }
-
+      html .post {
+       margin:20px auto !important;
+       box-shadow:none;
+       border:1px solid #ddd;
+       background:#eee;
+      }
       body .message a {
           color: #a1c16d;
       }
