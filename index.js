@@ -14,6 +14,49 @@ const MES_STORAGE_KEY = 'mes-7932a97f';
 
 const state = JSON.parse(localStorage[MES_STORAGE_KEY] || '{}');
 
+const fetchTmXhr = req =>
+  new Promise((resolve, reject) => {
+    if (!req.url.match(/^http/)) {
+      req.url = `https://memo.cash/${req.url}`;
+    }
+
+    console.log(`Fetching ${req.url} to get CSRF...`);
+
+    GM_xmlhttpRequest(
+      Object.assign(
+        {
+          method: req.data ? 'POST' : 'GET',
+          ...(req.data
+            ? {
+                overrideMimeType:
+                  'application/x-www-form-urlencoded; charset=UTF-8',
+              }
+            : {}),
+          headers: {
+            ...(req.csrf ? { 'x-csrf-token': `${req.csrf}` } : {}),
+            // ...(req.data ? { referer: req.url } : {}),
+          },
+          onerror: error => reject(error),
+          onload: res => {
+            const { readyState, responseText } = res;
+
+            if (res.readyState !== 4) {
+              reject(
+                `readyState=${readyState}; responseText: ${responseText || ''}`
+              );
+              return;
+            }
+
+            console.log(`Fetched ${req.url}`);
+
+            resolve(responseText);
+          },
+        },
+        req
+      )
+    );
+  });
+
 // Defaults for state
 Object.assign(state, {
   likedPosts: state.likedPosts || {},
@@ -231,61 +274,28 @@ $(() => {
     $post.addClass('is-liking');
 
     const fetchLikePageAndGetCsrf = () =>
-      new Promise((resolve, reject) => {
-        const url = 'https://memo.cash/' + href;
+      fetchTmXhr({
+        url: href,
+      }).then(text => text.match(/MemoApp.InitCsrf."([^"]+)/)[1]);
 
-        console.log(`Fetching like page to get CSRF at ${url}...`);
-
-        const res = GM_xmlhttpRequest({
-          method: 'GET',
-          url,
-          onerror: error => reject(error),
-          onload: res => {
-            console.log(res);
-            console.log(res.responseText);
-            const csrf = res.responseText.match(/MemoApp.InitCsrf."([^"]+)/)[1];
-            resolve(csrf);
-          },
-        });
+    const likePost = async csrf => {
+      await fetchTmXhr({
+        url: 'memo/like-submit',
+        data: `txHash=${txHash}&tip=${tip}&password=${password}`,
+        csrf,
       });
 
-    const likePost = csrf =>
-      new Promise((resolve, reject) => {
-        console.log({ csrf });
+      const prevTip = state.likedPosts[txHash]
+        ? state.likedPosts[txHash].tip || 0
+        : 0;
 
-        const req = {
-          method: 'POST',
-          url: 'https://memo.cash/memo/like-submit',
-          data: `txHash=${txHash}&tip=${tip}&password=${password}`,
-          onerror: error => reject(error),
-          overrideMimeType: 'application/x-www-form-urlencoded; charset=UTF-8',
-          headers: {
-            'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
-            'x-csrf-token': `${csrf}`,
-            referer: `${href}`,
-          },
-          onload: res => {
-            console.log(res);
+      state.likedPosts[txHash] = {
+        timestamp: +new Date(),
+        tip: prevTip + +tip,
+      };
 
-            const prevTip = state.likedPosts[txHash]
-              ? state.likedPosts[txHash].tip || 0
-              : 0;
-
-            state.likedPosts[txHash] = {
-              timestamp: +new Date(),
-              tip: prevTip + +tip,
-            };
-
-            saveState();
-
-            resolve(res.responseText);
-          },
-        };
-
-        console.log({ req });
-
-        const res = GM_xmlhttpRequest(req);
-      });
+      saveState();
+    };
 
     Promise.resolve(1)
       .then(fetchLikePageAndGetCsrf)
