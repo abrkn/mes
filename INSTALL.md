@@ -1,6 +1,6 @@
-# Installation Guide
+# Install Guide
 
-This guide is for Chrome. The script is most likely compatible with Firefox, but untested.
+> This guide is for Chrome. The script is most likely compatible with Firefox, but untested.
 
 If you encounter any problems, please [file an issue on the Github](https://github.com/abrkn/mes/issues/new). Registering for a Github account is free and easy.
 
