@@ -305,6 +305,7 @@ html .post {
     box-shadow: none;
     border: 1px solid #ddd;
     background: #eee;
+    border-radius:5px;
 }
 
 body .message a {
@@ -317,7 +318,7 @@ body .post {
 
 body .post .name {
     background: #fff;
-    border-radius: 15px 15px 0 0;
+    border-radius: 5px 5px 0 0;
     margin: 0;
     padding: 10px;
     color: #222
@@ -338,9 +339,15 @@ body > p:nth-child(9) > a.btn:nth-child(1) {
     background: #888;
 }
 
+html a[href="key/change-password"], html a[href="key/export"], html a[href="memo/set-name"] {
+  background:#fff;
+  border:1px solid #888;
+  color:#888;
+}
+
 /* Footer */
 
-body > a.btn:nth-child(25), body > a.btn:nth-child(26), body > a.btn:nth-child(27) {
+html a[href="/introducing-memo"], html a[href="/profile/1F5GrRezwGokQhxmF4fYaBbbNrPPaeBqMm"], html a[href="/stats"] {
   background:#ccc;
 }
 
