@@ -57,6 +57,60 @@ $(() => {
       .post.is-liked .actions .like-button:after {
         content: "${THUMBS_UP} Liked Memo!";
       }
+
+      .btn {
+          background: #99c261;
+          border: 0;
+          border-radius: 50px;
+          color: #fff;
+          padding: 8px 12px;
+          margin: 5px 0;
+      }
+
+      .btn:hover, .btn:focus {
+          background: #bfe498;
+      }
+
+      .btn-leave {
+          background: #b5b5b5;
+      }
+
+      .btn-leave:hover, .btn-leave:focus {
+          background: #999;
+      }
+
+      table {
+          margin: 0 auto;
+      }
+
+      table.table td {
+          border-radius: 0px;
+          margin: 5px;
+          padding: 20px;
+      }
+
+      table.table th {
+          border-radius: 0;
+      }
+
+      .header h1 {
+          display: block;
+          text-align: center;
+          margin: 15px 0;
+      }
+
+      .header, body {
+          text-align: center;
+      }
+
+      .post {
+          box-shadow: none;
+          border: 1px solid #ddd;
+          background: #eee;
+          margin: 25px auto;
+      }
+
+
     </style>
   `).appendTo('head');
 
