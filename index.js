@@ -98,228 +98,239 @@ $(() => {
   // Add CSS
   $(`
     <style>
-      body #profile-search {
-          background: #eee;
-          border: 0;
-          border-radius: 0;
-          font-size: 20px;
-          height: 45px;
-          margin: 5px auto 0;
-          max-width: 100%;
-          padding: 5px 10px;
-          text-align: center;
-          width: 600px;
-      }
 
-      * {
-          box-sizing: border-box;
-      }
+/* Globals */
 
-      .is-disabled, .post.is-liking .actions .like-button, .post.is-liked .actions .like-button {
-          cursor: not-allowed;
-          pointer-events: none;
-      }
+* {
+    box-sizing: border-box;
+}
 
-      .post .actions .like-button:after {
-          content: "Like Memo";
-      }
+body .btn-leave {
+    background: #b5b5b5;
+}
 
-      .post.is-liked .actions .like-button {
-          background-color: rgba(0,0,0,0.2);
-      }
+body .btn-leave:hover, .btn-leave:focus {
+    background: #999;
+}
 
-      .post.is-liked .actions .like-button:after {
-          content: "${THUMBS_UP} Liked Memo!";
-      }
+body .btn:hover, .btn:focus {
+    background: #bfe498;
+}
 
-      .post.is-liking .actions .like-button {
-          background-color: rgba(84,141,29,0.75);
-      }
+body table {
+    margin: 0 auto;
+}
 
-      .post.is-liking .actions .like-button:after {
-          content: "${HOURGLASS} Liking Memo...";
-      }
+body table.table td {
+    border-radius: 0px;
+    margin: 5px;
+    padding: 20px;
+}
 
-      body #profile-list {
-          align-item: flex-end;
-          display: flex;
-          flex-flow: row wrap;
-          justify-content: space-around;
-      }
+html hr {
+border:1px solid #eee;
+}
+body table.table th {
+    border-radius: 0;
+}
 
-      body #profile-list .btn {
-          background: #c2c2c2;
-          border-radius: 3px;
-          color: white;
-          height: 150px;
-          line-height: 150px;
-          margin: 2px;
-          padding: 5px;
-          text-align: center;
-          width: 211px;
-          word-break: break-all;
-      }
+body ul {
+    margin: 0;
+}
 
-      body #profile-list .btn:hover, body #profile-list .btn:focus {
-          background: #777;
-      }
-
-      body #profile-list p {
-          margin: 0;
-      }
-
-      body .btn, .btn-primary.btn-block {
-          background: #99c261;
-          border: 0;
-          border-radius: 50px;
-          color: #fff;
-          margin: 5px 0;
-          padding: 8px 12px;
-          transition: background-color 0.25s ease;
-      }
-
-      body textarea, input[type=text], input[type=password] {
-          background: #eee;
-          border: 0;
-          border-radius: 0;
-          padding: 5px 10px;
-          font-size: 19px;
-          line-height: 1.4;
-      }
-
-      body .btn-leave {
-          background: #b5b5b5;
-      }
-
-      body .btn-leave:hover, .btn-leave:focus {
-          background: #999;
-      }
-
-      body .btn:hover, .btn:focus {
-          background: #bfe498;
-      }
-
-      body .header h1 {
-          display: block;
-          margin: 15px 0;
-          text-align: center;
-      }
-
-      body .header, body {
-          text-align: center;
-      }
-
-      body .message {
-          font-family: helvetica, arial, sans-serif;
-          font-size: 21px;
-          line-height: 1.3;
-          padding: 5px 10px;
-      }
-
-      html .post {
-          margin: 20px auto ;
-          box-shadow: none;
-          border: 1px solid #ddd;
-          background: #eee;
-      }
-
-      body .message a {
-          color: #a1c16d;
-      }
-
-      body .post {
-          padding: 0;
-      }
-
-      body .post .name {
-          background: #fff;
-          border-radius: 15px 15px 0 0;
-          margin: 0;
-          padding: 10px;
-          color: #222
-            ;
-      }
-
-      body > div.header > div > a:nth-child(4) {
-          background: none;
-          color: #618b32;
-          position: absolute;
-          right: 95px;
-          top: 0;
-      }
-
-      body > div.header > div > a:nth-child(4):hover, body > div.header > div > a:nth-child(5):hover {
-          color: #222;
-      }
-
-      body > div.header > div > a:nth-child(5) {
-          background: none;
-          color: #618b32;
-          position: absolute;
-          right: 0;
-          top: 0;
-      }
-
-      body label[for=profile-search] {
-          display: block;
-          margin: 0;
-      }
-
-      body table {
-          margin: 0 auto;
-      }
-
-      body table.table td {
-          border-radius: 0px;
-          margin: 5px;
-          padding: 20px;
-      }
-
-      html hr {
-      border:1px solid #eee;
-      }
-      body table.table th {
-          border-radius: 0;
-      }
-
-      body ul {
-          margin: 0;
-      }
-
-      body ul li {
-          display: inline-block;
-          list-style: none;
-          margin: 5px;
-      }
-
-      body input[type=text], body input[type=password] {
-          background: #eee;
-          border: 0;
-          border-radius: 0;
-          height: 35px;
-      }
-
-      body #form-signup {
-          padding: 10px 0;
-      }
-
-      body > p:nth-child(9) > a.btn:nth-child(2) {
-          display: block;
-          width: 400px;
-          margin: 10px auto;
-          background: #618b32;
-      }
-
-      body > p:nth-child(9) > a.btn:nth-child(1) {
-          display: block;
-          width: 400px;
-          margin: 10px auto;
-          background: #888;
-      }
+body ul li {
+    display: inline-block;
+    list-style: none;
+    margin: 5px;
+}
 
 
+body .btn, .btn-primary.btn-block {
+    background: #99c261;
+    border: 0;
+    border-radius: 50px;
+    color: #fff;
+    margin: 5px 0;
+    padding: 8px 12px;
+    transition: background-color 0.25s ease;
+}
 
-      /* "Like Memo" button texts */
+/* Actions */
+
+.is-disabled, .post.is-liking .actions .like-button, .post.is-liked .actions .like-button {
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.post .actions .like-button:after {
+    content: "Like Memo";
+}
+
+.post.is-liked .actions .like-button {
+    background-color: rgba(0,0,0,0.2);
+}
+
+.post.is-liked .actions .like-button:after {
+    content: "${THUMBS_UP} Liked Memo!";
+}
+
+.post.is-liking .actions .like-button {
+    background-color: rgba(84,141,29,0.75);
+}
+
+.post.is-liking .actions .like-button:after {
+    content: "${HOURGLASS} Liking Memo...";
+}
+
+/* Inputs */
+
+body #profile-search {
+    background: #eee;
+    border: 0;
+    border-radius: 0;
+    font-size: 20px;
+    height: 45px;
+    margin: 5px auto 0;
+    max-width: 100%;
+    padding: 5px 10px;
+    text-align: center;
+    width: 600px;
+}
+
+body label[for=profile-search] {
+    display: block;
+    margin: 0;
+}
+
+body textarea, input[type=text], input[type=password] {
+    background: #eee;
+    border: 0;
+    border-radius: 0;
+    padding: 5px 10px;
+    font-size: 19px;
+    line-height: 1.4;
+}
+
+body input[type=text], body input[type=password] {
+    background: #eee;
+    border: 0;
+    border-radius: 0;
+    height: 35px;
+}
+
+body #form-signup {
+    padding: 10px 0;
+}
+
+/* Navigation */
+
+body > div.header > div > a:nth-child(4) {
+    background: none;
+    color: #618b32;
+    position: absolute;
+    right: 95px;
+    top: 0;
+}
+
+body > div.header > div > a:nth-child(4):hover, body > div.header > div > a:nth-child(5):hover {
+    color: #222;
+}
+
+body > div.header > div > a:nth-child(5) {
+    background: none;
+    color: #618b32;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+/* Post and Profile */
+
+
+body #profile-list {
+    align-item: flex-end;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+}
+
+body #profile-list .btn {
+    background: #c2c2c2;
+    border-radius: 3px;
+    color: white;
+    height: 150px;
+    line-height: 150px;
+    margin: 2px;
+    padding: 5px;
+    text-align: center;
+    width: 211px;
+    word-break: break-all;
+}
+
+body #profile-list .btn:hover, body #profile-list .btn:focus {
+    background: #777;
+}
+
+body #profile-list p {
+    margin: 0;
+}
+      
+body .header h1 {
+    display: block;
+    margin: 15px 0;
+    text-align: center;
+}
+
+body .header, body {
+    text-align: center;
+}
+      
+body .message {
+    font-family: helvetica, arial, sans-serif;
+    font-size: 21px;
+    line-height: 1.3;
+    padding: 5px 10px;
+}
+
+html .post {
+    margin: 20px auto ;
+    box-shadow: none;
+    border: 1px solid #ddd;
+    background: #eee;
+}
+
+body .message a {
+    color: #a1c16d;
+}
+
+body .post {
+    padding: 0;
+}
+
+body .post .name {
+    background: #fff;
+    border-radius: 15px 15px 0 0;
+    margin: 0;
+    padding: 10px;
+    color: #222
+      ;
+}
+      
+body > p:nth-child(9) > a.btn:nth-child(2) {
+    display: block;
+    width: 400px;
+    margin: 10px auto;
+    background: #618b32;
+}
+
+body > p:nth-child(9) > a.btn:nth-child(1) {
+    display: block;
+    width: 400px;
+    margin: 10px auto;
+    background: #888;
+}
+
+  /* "Like Memo" button texts */
 
     </style>
   `).appendTo('head');
