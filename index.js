@@ -58,9 +58,7 @@ const fetchTmXhr = req =>
   });
 
 const fetchCsrf = url =>
-  fetchTmXhr({
-    url,
-  }).then(text => text.match(/MemoApp.InitCsrf."([^"]+)/)[1]);
+  fetchTmXhr({ url }).then(text => text.match(/MemoApp.InitCsrf."([^"]+)/)[1]);
 
 const likePostInBackground = async (txhash, tip = 0) => {
   const { memoPassword: password } = localStorage;
