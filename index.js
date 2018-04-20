@@ -144,9 +144,6 @@ body ul li {
     margin: 5px;
 }
 
-h2 {
-  margin-bottom:65px;
-}
 
 body .btn, .btn-primary.btn-block, body input[type=submit].btn {
     background: #99c261;
@@ -250,7 +247,7 @@ body > div.header > div > a:nth-child(5) {
 html a[href="logout"] {
   position:absolute;
   top:2px;
-  background:#ddd;
+  background:#b5b5b5;
   left:5px;
   position:absolute;
 }
@@ -350,6 +347,12 @@ html a[href="key/change-password"], html a[href="key/export"], html a[href="memo
   background:#fff;
   border:1px solid #888;
   color:#888;
+}
+
+html a[href="key/change-password"]:hover, html a[href="key/export"]:hover, html a[href="memo/set-name"]:hover, html a[href="key/change-password"]:focus, html a[href="key/export"]:focus, html a[href="memo/set-name"]:focus {
+  background:#fff;
+  border-color:#999;
+  color:#999;
 }
 
 /* Footer */
