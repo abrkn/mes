@@ -328,7 +328,7 @@ $(() => {
     $aToImg.each((_, a) =>
       $(a).html(
         `<img src="${$a.attr('href')}" style="max-width:${messageWidth -
-          20}px;max-height:200px;" />`
+          20}px;max-height:200px;display:block;margin:10px auto;" />`
       )
     );
   });
