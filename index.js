@@ -244,6 +244,14 @@ body > div.header > div > a:nth-child(5) {
     top: 0;
 }
 
+html a[href="logout"] {
+  position:absolute;
+  top:2px;
+  background:#ddd;
+  left:5px;
+  position:absolute;
+}
+
 /* Post and Profile */
 
 
