@@ -4,6 +4,8 @@
 
 ![](https://i.imgur.com/iyw7CCo.gif)
 
+Or [click here to upgrade](UPGRADE.md)
+
 ## About
 
 Makes Memo.cash more awesome.
