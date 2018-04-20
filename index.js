@@ -111,6 +111,34 @@ $(() => {
           margin: 25px auto;
       }
 
+      body #profile-list .btn {
+          border-radius: 0;
+          background: #999;
+          padding: 5px;
+          width: 200px;
+          height: 150px;
+          margin-top: 10px;
+          line-height: 150px;
+          color: white;
+          text-align: center;
+          word-break: break-all;
+      }
+
+      body #profile-list p {
+          margin: 0;
+      }
+
+      * {
+          box-sizing: border-box;
+      }
+
+      body #profile-list {
+          display: flex;
+          flex-flow: row wrap;
+          align-item: flex-end;
+          justify-content: space-around;
+      }
+
 
     </style>
   `).appendTo('head');
