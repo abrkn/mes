@@ -283,6 +283,21 @@ $(() => {
           padding: 10px 0;
       }
 
+      body > p:nth-child(9) > a.btn:nth-child(2) {
+          display:block;
+          width:400px;
+          margin:10px auto;
+          background:#618b32;
+      }
+
+      body > p:nth-child(9) > a.btn:nth-child(1) {
+          display:block;
+          width:400px;
+          margin:10px auto;
+          background:#888
+          
+      }
+
       /* "Like Memo" button texts */
 
     </style>
