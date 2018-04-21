@@ -4,6 +4,10 @@
     box-sizing: border-box;
 }
 
+html body {
+    margin-top:40px;
+}
+
 html body .btn-leave {
     background: #b5b5b5;
 }
@@ -123,29 +127,64 @@ body #form-signup {
 
 /* Navigation */
 
-body > div.header > div > a:nth-child(4) {
-    background: none;
-    color: #618b32;
-    position: absolute;
-    right: 95px;
-    top: 0;
+html {
+    body {
+        .new-memo-button {
+            background: #618b32;
+            position:absolute;
+            top:0;
+            right:5px;
+        }
+
+        .header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            background: #fff;
+            border-bottom: 1px solid #eee;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+            z-index: 999;
+            padding-bottom: 0px;
+
+            h1 {
+                display: inline-block;
+                line-height: 1;
+                margin: 0;
+                padding: 0 40px 0 0;
+            }
+
+            img {
+                vertical-align: middle;
+                margin-top: -5px;
+            }
+        }
+    }
 }
 
-body > div.header > div > a:nth-child(4):hover, body > div.header > div > a:nth-child(5):hover {
+html body .protocol-button {
+    background: rgba(255,255,255,0.7);
+    color: #618b32;
+    position: fixed;
+    right: 95px;
+    bottom: 0;
+}
+
+html body .protocol-button:hover, html body .disclaimer-button:hover {
     color: #222;
 }
 
-body > div.header > div > a:nth-child(5) {
-    background: none;
+body .disclaimer-button {
+    background: rgba(255,255,255,0.7);
     color: #618b32;
-    position: absolute;
+    position: fixed;
     right: 0;
-    top: 0;
+    bottom: 0;
 }
 
-html a[href="logout"] {
+html a[href="logout"], body .logout-button {
   position:absolute;
-  top:2px;
+  top:0px;
   background:#b5b5b5;
   left:5px;
   position:absolute;
@@ -239,31 +278,31 @@ body .post .name {
       ;
 }
 
-body > p:nth-child(9) > a.btn:nth-child(2) {
+body .new-memo-inner-button {
     display: block;
     width: 400px;
     margin: 10px auto;
     background: #618b32;
     position:absolute;
-    top:175px;
+    top:95px;
     left:50%;
     margin-left:-200px;
 }
 
-body > p:nth-child(9) > a.btn:nth-child(1) {
+body .new-memo-inner-button {
     display: block;
     width: 400px;
     margin: 10px auto;
     background: #888;
 }
 
-html a[href="key/change-password"], html a[href="key/export"], html a[href="memo/set-name"] {
+html a[href="key/change-password"], html a[href="key/export"], html a[href="memo/set-name"], html a.outline-button {
   background:#fff;
   border:1px solid #888;
   color:#888;
 }
 
-html a[href="key/change-password"]:hover, html a[href="key/export"]:hover, html a[href="memo/set-name"]:hover, html a[href="key/change-password"]:focus, html a[href="key/export"]:focus, html a[href="memo/set-name"]:focus {
+html a[href="key/change-password"]:hover, html a[href="key/export"]:hover, html a[href="memo/set-name"]:hover, html a[href="key/change-password"]:focus, html a[href="key/export"]:focus, html a[href="memo/set-name"]:focus, html a.outline-button:hover, html a.outline-button:focus {
   background:#fff;
   border-color:#999;
   color:#999;
@@ -271,7 +310,7 @@ html a[href="key/change-password"]:hover, html a[href="key/export"]:hover, html 
 
 /* Footer */
 
-html a[href="/introducing-memo"], html a[href="/profile/1F5GrRezwGokQhxmF4fYaBbbNrPPaeBqMm"], html a[href="/stats"] {
+html a[href="/introducing-memo"], html a[href="/profile/1F5GrRezwGokQhxmF4fYaBbbNrPPaeBqMm"], html a[href="/stats"], .footer-button {
   background:#ccc;
 }
 

@@ -38,7 +38,7 @@ function injectAutoExpandImages() {
 
     nextHtml = nextHtml.replace(
       /yt!([0-9a-z]{9,12})/i,
-      '<iframe src="https://www.youtube.com/embed/$1?html5=1" width=414 height=233 style="margin:10px auto; display:block;"></iframe>'
+      '<iframe src="https://www.youtube.com/embed/$1?html5=1" width=414 height=233 style="margin:10px auto; display:block;border:0;"></iframe>'
     );
 
     if (nextHtml !== prevHtml) {
