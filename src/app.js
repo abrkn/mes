@@ -46,12 +46,6 @@ const saveState = () => {
 };
 
 $(() => {
-  // Add CSS
-  $(`
-
-    </style>
-  `).appendTo("head");
-
   // Remember password
   $('[type="password"]').each((_, password) => {
     // Load
