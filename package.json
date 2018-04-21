@@ -8,10 +8,13 @@
   },
   "devDependencies": {
     "husky": "1.0.0-rc.1",
-    "nodemon": "1.17.3"
+    "nodemon": "1.17.3",
+    "npm-run-all": "4.1.2"
   },
   "scripts": {
-    "build": "browserify -t browserify-css src/app.js > index.js",
+    "build:browserify": "browserify -t browserify-css src/app.js > build/app.js",
+    "build:userscript-header": "node scripts/userscript-header.js > build/userscript-header.js",
+    "build": "run-s build:browserify build:userscript-header; cat build/userscript-header.js build/app.js > index.js",
     "install": "npm run build",
     "watch-and-copy": "nodemon -w src -w app.css -e js,css -x 'npm run build; cat index.js | pbcopy'"
   },
@@ -20,7 +23,7 @@
     "url": "git+https://github.com/abrkn/mes.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Andreas Brekken: https://memo.cash/profile/149o1esm1LrYEy1DizZgxANSppx3FESHKw",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/abrkn/mes/issues"

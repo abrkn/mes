@@ -1,13 +1,3 @@
-// ==UserScript==
-// @name         MES
-// @namespace    https://tampermonkey.net/
-// @version      0.3.9
-// @description  Memo Enhancement Suite
-// @author       Andreas Brekken: https://memo.cash/profile/149o1esm1LrYEy1DizZgxANSppx3FESHKw
-// @match        https://memo.cash/*
-// @grant        GM_xmlhttpRequest
-// ==/UserScript==
-
 const { fetchTmXhr, fetchCsrf } = require("./memoFetch");
 
 const MES_STORAGE_KEY = "mes-7932a97f";
