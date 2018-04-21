@@ -319,7 +319,14 @@ html .post {
     box-shadow: none;
     border: 1px solid #ddd;
     background: #eee;
-    border-radius:5px;
+    border-radius: 4px;
+    max-width: 888px;
+    text-align: left;
+    margin: 25px auto;
+}
+
+body .post .btn-leave {
+    float: right;
 }
 
 body .message a {
@@ -328,6 +335,14 @@ body .message a {
 
 body .post {
     padding: 0;
+}
+
+body .post .actions {
+    margin: 10px;
+}
+
+body .post .likes {
+    margin: 10px;
 }
 
 body .post .name {
