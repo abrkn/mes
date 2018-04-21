@@ -337,6 +337,14 @@ body .post {
     padding: 0;
 }
 
+body .post .actions {
+    margin: 10px;
+}
+
+body .post .likes {
+    margin: 10px;
+}
+
 body .post .name {
     background: #fff;
     border-radius: 5px 5px 0 0;
