@@ -8,7 +8,7 @@ Or [click here to upgrade](UPGRADE.md)
 
 ## About
 
-Makes Memo.cash more awesome.
+Makes Memo.cash more awesome. Join us on Telegram: [https://t.me/EnhanceMemo](https://t.me/EnhanceMemo)
 
 ## Features
 
