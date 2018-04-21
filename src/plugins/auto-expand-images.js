@@ -8,7 +8,7 @@ function injectAutoExpandImages() {
 
     const createImg = src =>
       $(
-        `<img src="${src}" className="is-mes-expanded-media" style="max-width:${messageWidth}px;max-height:200px;" />`
+        `<img src="${src}" className="is-mes-expanded-media" style="max-width:${messageWidth}px;max-height:200px;display:block;margin:10px auto;" />`
       );
 
     $a.each((i, el) => {
@@ -38,7 +38,7 @@ function injectAutoExpandImages() {
 
     nextHtml = nextHtml.replace(
       /yt!([0-9a-z]{9,12})/i,
-      '<iframe src="https://www.youtube.com/embed/$1?html5=1" width=414 height=233></iframe>'
+      '<iframe src="https://www.youtube.com/embed/$1?html5=1" width=414 height=233 style="margin:10px auto; display:block;"></iframe>'
     );
 
     if (nextHtml !== prevHtml) {
