@@ -34,32 +34,32 @@ $(() => {
 });
 
 },{"../app.css":1,"./plugins/auto-expand-images":5,"./plugins/css-state-classes":6,"./plugins/fix-tip-amount":7,"./plugins/inline-commenting":8,"./plugins/remember-password":9}],3:[function(require,module,exports){
-const { state, saveState } = require("./state");
-const { fetchCsrf, fetchTmXhr } = require("./memoFetch");
+const { state, saveState } = require('./state');
+const { fetchCsrf, fetchTmXhr } = require('./memoFetch');
 
 const likePostInBackground = async (txhash, tip = 0) => {
   const { memoPassword: password } = localStorage;
   const csrf = await fetchCsrf(`memo/like/${txhash}`);
-  const tipForQuery = (+tip || "").toString();
+  const tipForQuery = (+tip || '').toString();
 
   await fetchTmXhr({
-    url: "memo/like-submit",
+    url: 'memo/like-submit',
     data: `txHash=${txhash}&tip=${tipForQuery}&password=${password}`,
-    csrf
+    csrf,
   });
 
   const prevTip = state.likedPosts[txhash] ? state.likedPosts[txhash].tip || 0 : 0;
 
   state.likedPosts[txhash] = {
     timestamp: +new Date(),
-    tip: prevTip + +tip
+    tip: prevTip + +tip,
   };
 
   saveState();
 };
 
 Object.assign(exports, {
-  likePostInBackground
+  likePostInBackground,
 });
 
 },{"./memoFetch":4,"./state":10}],4:[function(require,module,exports){
@@ -76,11 +76,13 @@ const fetchTmXhr = req =>
       const { readyState, responseText, status } = res;
 
       if (res.readyState !== 4) {
-        reject(new Error(`readyState=${readyState}; responseText: ${responseText || "<none>"}`));
+        reject(new Error(`readyState=${readyState}; responseText: ${responseText || '<none>'}`));
         return;
       }
       if (!(status >= 200 && status < 300)) {
-        reject(new Error(`HTTP Status=${status || "<none>"}; responseText: ${responseText || "<none>"}`));
+        reject(
+          new Error(`HTTP Status=${status || '<none>'}; responseText: ${responseText || '<none>'}`)
+        );
         return;
       }
       console.log(`Fetched ${req.url}`);
@@ -88,18 +90,18 @@ const fetchTmXhr = req =>
       resolve(responseText);
     };
 
-    const contentType = "application/x-www-form-urlencoded; charset=UTF-8";
+    const contentType = 'application/x-www-form-urlencoded; charset=UTF-8';
 
     const reqToSend = Object.assign(
       {
-        method: req.data ? "POST" : "GET",
+        method: req.data ? 'POST' : 'GET',
         headers: {
-          ...(req.csrf ? { "x-csrf-token": `${req.csrf}` } : {}),
+          ...(req.csrf ? { 'x-csrf-token': `${req.csrf}` } : {}),
           ...(req.data ? { referer: req.url } : {}),
-          "content-type": contentType
+          'content-type': contentType,
         },
         onerror,
-        onload
+        onload,
       },
       req
     );
@@ -107,56 +109,62 @@ const fetchTmXhr = req =>
     GM_xmlhttpRequest(reqToSend);
   });
 
-const fetchCsrf = url => fetchTmXhr({ url }).then(text => text.match(/MemoApp.InitCsrf."([^"]+)/)[1]);
+const fetchCsrf = url =>
+  fetchTmXhr({ url }).then(text => text.match(/MemoApp.InitCsrf."([^"]+)/)[1]);
 
 Object.assign(exports, {
   fetchTmXhr,
-  fetchCsrf
+  fetchCsrf,
 });
 
 },{}],5:[function(require,module,exports){
 function injectAutoExpandImages() {
-  $(".post .message").each((_, message) => {
+  $('.post .message').each((_, message) => {
     const $message = $(message);
     const messageWidth = $message.width();
-    const $a = $message.find("a");
+    const $a = $message.find('a');
 
     const $aToImg = $a.filter((_, a) =>
       $(a)
-        .attr("href")
+        .attr('href')
         .match(/\.(png|jpe?g|gif)$/i)
     );
-    $aToImg.each((_, a) => $(a).html(`<img src="${$a.attr("href")}" style="max-width:${messageWidth - 20}px;max-height:200px;display:block;margin:10px auto;" />`));
+    $aToImg.each((_, a) =>
+      $(a).html(
+        `<img src="${$a.attr('href')}" style="max-width:${messageWidth -
+          20}px;max-height:200px;display:block;margin:10px auto;" />`
+      )
+    );
   });
 }
 
 module.exports = injectAutoExpandImages;
 
 },{}],6:[function(require,module,exports){
-const { state } = require("../state");
+const { state } = require('../state');
 
 function injectCssStateClasses() {
   // Add missing css class to "Like Memo" buttons
-  $(`.post .actions a[href^='memo/like']`).addClass("like-button");
+  $(`.post .actions a[href^='memo/like']`).addClass('like-button');
 
   // Add data-txhash to posts
   $(`.post .actions .like-button`).each((_, a) => {
     const $a = $(a);
-    const $post = $a.closest(".post");
-    const href = $a.attr("href");
+    const $post = $a.closest('.post');
+    const href = $a.attr('href');
     const txhash = href.match(/[^\/\?]+$/)[0];
-    $post.attr("data-txhash", txhash);
+    $post.attr('data-txhash', txhash);
   });
 
   // Remove "Like Memo", which will be done by CSS instead
-  $(`.post .actions .like-button`).html("");
+  $(`.post .actions .like-button`).html('');
 
   // Restore likes
-  $(".post[data-txhash]").each((_, post) => {
+  $('.post[data-txhash]').each((_, post) => {
     const $post = $(post);
-    const txhash = $post.attr("data-txhash");
+    const txhash = $post.attr('data-txhash');
 
-    $post.toggleClass("is-liked", !!state.likedPosts[txhash]);
+    $post.toggleClass('is-liked', !!state.likedPosts[txhash]);
   });
 }
 
@@ -164,16 +172,16 @@ module.exports = injectCssStateClasses;
 
 },{"../state":10}],7:[function(require,module,exports){
 function injectFixTipAmount() {
-  const $formMemoLike = $("#form-memo-like");
+  const $formMemoLike = $('#form-memo-like');
 
   if ($formMemoLike.length) {
     // Only tip in integers with a minimum of what is stated: "(min. 123)"
-    $formMemoLike.find("input#tip").attr({
-      type: "number",
-      pattern: "d*",
+    $formMemoLike.find('input#tip').attr({
+      type: 'number',
+      pattern: 'd*',
       min: $('#form-memo-like label[for="tip"]')
         .text()
-        .match(/(\d+)\)/)[1]
+        .match(/(\d+)\)/)[1],
     });
   }
 }
@@ -181,30 +189,30 @@ function injectFixTipAmount() {
 module.exports = injectFixTipAmount;
 
 },{}],8:[function(require,module,exports){
-const { likePostInBackground } = require("../memoApi");
+const { likePostInBackground } = require('../memoApi');
 
 function injectInlineCommenting() {
   $(`.post .actions .like-button`).click(e => {
     const $a = $(e.target);
-    const $post = $a.closest(".post");
-    const href = $a.attr("href");
+    const $post = $a.closest('.post');
+    const href = $a.attr('href');
     const txhash = href.match(/[^\/\?]+$/)[0]; // TODO: Duplicate
     const { memoPassword: password } = localStorage;
 
-    const tipText = prompt("How much tip in satoshis? (Blank=0)", "0");
+    const tipText = prompt('How much tip in satoshis? (Blank=0)', '0');
 
     if (tipText === null) {
       return false;
     }
-    $post.addClass("is-liking");
+    $post.addClass('is-liking');
 
     likePostInBackground(txhash, tipText)
       .then(() => {
-        $post.removeClass("is-liking");
-        $post.addClass("is-liked");
+        $post.removeClass('is-liking');
+        $post.addClass('is-liked');
       })
       .catch(error => {
-        $post.removeClass("is-liking");
+        $post.removeClass('is-liking');
         alert(`Failed to like: ${error.message || error.stack || error}!`);
       });
 
@@ -218,11 +226,11 @@ module.exports = injectInlineCommenting;
 function injectRememberPassword() {
   $('[type="password"]').each((_, password) => {
     // Load
-    $(password).val(localStorage.memoPassword || "");
+    $(password).val(localStorage.memoPassword || '');
 
     // Save
     $(password)
-      .closest("form")
+      .closest('form')
       .submit(() => {
         localStorage.memoPassword = $(password).val();
       });
@@ -232,12 +240,12 @@ function injectRememberPassword() {
 module.exports = injectRememberPassword;
 
 },{}],10:[function(require,module,exports){
-const MES_STORAGE_KEY = "mes-7932a97f";
+const MES_STORAGE_KEY = 'mes-7932a97f';
 
-const state = JSON.parse(localStorage[MES_STORAGE_KEY] || "{}");
+const state = JSON.parse(localStorage[MES_STORAGE_KEY] || '{}');
 
 Object.assign(state, {
-  likedPosts: state.likedPosts || {}
+  likedPosts: state.likedPosts || {},
 });
 
 console.log({ state });
@@ -248,7 +256,7 @@ const saveState = () => {
 
 Object.assign(exports, {
   state,
-  saveState
+  saveState,
 });
 
 },{}]},{},[2]);

@@ -11,11 +11,13 @@ const fetchTmXhr = req =>
       const { readyState, responseText, status } = res;
 
       if (res.readyState !== 4) {
-        reject(new Error(`readyState=${readyState}; responseText: ${responseText || "<none>"}`));
+        reject(new Error(`readyState=${readyState}; responseText: ${responseText || '<none>'}`));
         return;
       }
       if (!(status >= 200 && status < 300)) {
-        reject(new Error(`HTTP Status=${status || "<none>"}; responseText: ${responseText || "<none>"}`));
+        reject(
+          new Error(`HTTP Status=${status || '<none>'}; responseText: ${responseText || '<none>'}`)
+        );
         return;
       }
       console.log(`Fetched ${req.url}`);
@@ -23,18 +25,18 @@ const fetchTmXhr = req =>
       resolve(responseText);
     };
 
-    const contentType = "application/x-www-form-urlencoded; charset=UTF-8";
+    const contentType = 'application/x-www-form-urlencoded; charset=UTF-8';
 
     const reqToSend = Object.assign(
       {
-        method: req.data ? "POST" : "GET",
+        method: req.data ? 'POST' : 'GET',
         headers: {
-          ...(req.csrf ? { "x-csrf-token": `${req.csrf}` } : {}),
+          ...(req.csrf ? { 'x-csrf-token': `${req.csrf}` } : {}),
           ...(req.data ? { referer: req.url } : {}),
-          "content-type": contentType
+          'content-type': contentType,
         },
         onerror,
-        onload
+        onload,
       },
       req
     );
@@ -42,9 +44,10 @@ const fetchTmXhr = req =>
     GM_xmlhttpRequest(reqToSend);
   });
 
-const fetchCsrf = url => fetchTmXhr({ url }).then(text => text.match(/MemoApp.InitCsrf."([^"]+)/)[1]);
+const fetchCsrf = url =>
+  fetchTmXhr({ url }).then(text => text.match(/MemoApp.InitCsrf."([^"]+)/)[1]);
 
 Object.assign(exports, {
   fetchTmXhr,
-  fetchCsrf
+  fetchCsrf,
 });

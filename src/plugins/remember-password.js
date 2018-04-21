@@ -1,11 +1,11 @@
 function injectRememberPassword() {
   $('[type="password"]').each((_, password) => {
     // Load
-    $(password).val(localStorage.memoPassword || "");
+    $(password).val(localStorage.memoPassword || '');
 
     // Save
     $(password)
-      .closest("form")
+      .closest('form')
       .submit(() => {
         localStorage.memoPassword = $(password).val();
       });

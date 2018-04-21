@@ -1,9 +1,9 @@
-const MES_STORAGE_KEY = "mes-7932a97f";
+const MES_STORAGE_KEY = 'mes-7932a97f';
 
-const state = JSON.parse(localStorage[MES_STORAGE_KEY] || "{}");
+const state = JSON.parse(localStorage[MES_STORAGE_KEY] || '{}');
 
 Object.assign(state, {
-  likedPosts: state.likedPosts || {}
+  likedPosts: state.likedPosts || {},
 });
 
 console.log({ state });
@@ -14,5 +14,5 @@ const saveState = () => {
 
 Object.assign(exports, {
   state,
-  saveState
+  saveState,
 });
