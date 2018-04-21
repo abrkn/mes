@@ -4,7 +4,9 @@
   "description": "Memo Enhancement Suite (MES)",
   "dependencies": {
     "browserify": "16.2.0",
-    "browserify-css": "0.14.0"
+    "browserify-css": "0.14.0",
+    "lodash": "4.17.5",
+    "scssify": "3.0.1"
   },
   "devDependencies": {
     "husky": "1.0.0-rc.1",
@@ -15,7 +17,7 @@
     "pretty-quick": "1.4.1"
   },
   "scripts": {
-    "build:browserify": "browserify -t browserify-css src/app.js > build/app.js",
+    "build:browserify": "browserify -t scssify -t browserify-css src/app.js > build/app.js",
     "build:userscript-header": "node scripts/userscript-header.js > build/userscript-header.js",
     "build": "run-s build:browserify build:userscript-header; cat build/userscript-header.js build/app.js > index.js",
     "install": "npm run build",

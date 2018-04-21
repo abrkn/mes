@@ -6,7 +6,7 @@ const injectCssStateClasses = require('./plugins/css-state-classes');
 
 const addCss = () => {
   const element = document.createElement('style');
-  element.innerText = require('../app.css');
+  element.innerText = require('./app.scss');
 
   document.head.appendChild(element);
 };
