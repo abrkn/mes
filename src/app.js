@@ -1,6 +1,4 @@
-const { fetchTmXhr, fetchCsrf } = require("./memoFetch");
 const injectInlineCommenting = require("./plugins/inline-commenting");
-const { state, saveState } = require("./state");
 const injectRememberPassword = require("./plugins/remember-password");
 const injectAutoExpandImages = require("./plugins/auto-expand-images");
 const injectFixTipAmountInput = require("./plugins/fix-tip-amount");

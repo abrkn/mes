@@ -1,4 +1,4 @@
-const { state, saveState } = require("../state");
+const { state } = require("../state");
 
 function injectCssStateClasses() {
   // Add missing css class to "Like Memo" buttons
