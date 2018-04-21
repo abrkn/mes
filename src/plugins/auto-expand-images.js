@@ -30,6 +30,20 @@ function injectAutoExpandImages() {
         $el.html(createImg(imgFlipSrc));
       }
     });
+
+    // YouTube short-hand
+    const prevHtml = $message.html();
+
+    let nextHtml = prevHtml;
+
+    nextHtml = nextHtml.replace(
+      /yt!([0-9a-z]{9,12})/i,
+      '<iframe src="https://www.youtube.com/embed/$1?html5=1" width=414 height=233></iframe>'
+    );
+
+    if (nextHtml !== prevHtml) {
+      $message.html(nextHtml);
+    }
   });
 }
 
