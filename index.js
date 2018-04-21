@@ -13,6 +13,8 @@ module.exports = "/* Globals */\n* {\n  box-sizing: border-box;\n}\nhtml body .b
 const { fetchTmXhr, fetchCsrf } = require("./memoFetch");
 const injectInlineCommenting = require("./plugins/inline-commenting");
 const { state, saveState } = require("./state");
+const injectRememberPassword = require("./plugins/remember-password");
+const injectAutoExpandImages = require("./plugins/auto-expand-images");
 
 const addCss = () => {
   const element = document.createElement("style");
@@ -24,18 +26,7 @@ const addCss = () => {
 addCss();
 
 $(() => {
-  // Remember password
-  $('[type="password"]').each((_, password) => {
-    // Load
-    $(password).val(localStorage.memoPassword || "");
-
-    // Save
-    $(password)
-      .closest("form")
-      .submit(() => {
-        localStorage.memoPassword = $(password).val();
-      });
-  });
+  injectRememberPassword();
 
   const $formMemoLike = $("#form-memo-like");
 
@@ -49,19 +40,8 @@ $(() => {
         .match(/(\d+)\)/)[1]
     });
   }
-  // Auto expand images
-  $(".post .message").each((_, message) => {
-    const $message = $(message);
-    const messageWidth = $message.width();
-    const $a = $message.find("a");
 
-    const $aToImg = $a.filter((_, a) =>
-      $(a)
-        .attr("href")
-        .match(/\.(png|jpe?g|gif)$/i)
-    );
-    $aToImg.each((_, a) => $(a).html(`<img src="${$a.attr("href")}" style="max-width:${messageWidth - 20}px;max-height:200px;display:block;margin:10px auto;" />`));
-  });
+  injectAutoExpandImages();
 
   // Add missing css class to "Like Memo" buttons
   $(`.post .actions a[href^='memo/like']`).addClass("like-button");
@@ -89,7 +69,7 @@ $(() => {
   injectInlineCommenting();
 });
 
-},{"../app.css":1,"./memoFetch":4,"./plugins/inline-commenting":5,"./state":6}],3:[function(require,module,exports){
+},{"../app.css":1,"./memoFetch":4,"./plugins/auto-expand-images":5,"./plugins/inline-commenting":6,"./plugins/remember-password":7,"./state":8}],3:[function(require,module,exports){
 const { state, saveState } = require("./state");
 const { fetchCsrf, fetchTmXhr } = require("./memoFetch");
 
@@ -118,7 +98,7 @@ Object.assign(exports, {
   likePostInBackground
 });
 
-},{"./memoFetch":4,"./state":6}],4:[function(require,module,exports){
+},{"./memoFetch":4,"./state":8}],4:[function(require,module,exports){
 const fetchTmXhr = req =>
   new Promise((resolve, reject) => {
     if (!req.url.match(/^http/)) {
@@ -171,6 +151,24 @@ Object.assign(exports, {
 });
 
 },{}],5:[function(require,module,exports){
+function injectAutoExpandImages() {
+  $(".post .message").each((_, message) => {
+    const $message = $(message);
+    const messageWidth = $message.width();
+    const $a = $message.find("a");
+
+    const $aToImg = $a.filter((_, a) =>
+      $(a)
+        .attr("href")
+        .match(/\.(png|jpe?g|gif)$/i)
+    );
+    $aToImg.each((_, a) => $(a).html(`<img src="${$a.attr("href")}" style="max-width:${messageWidth - 20}px;max-height:200px;display:block;margin:10px auto;" />`));
+  });
+}
+
+module.exports = injectAutoExpandImages;
+
+},{}],6:[function(require,module,exports){
 const { likePostInBackground } = require("../memoApi");
 
 function injectInlineCommenting() {
@@ -204,7 +202,24 @@ function injectInlineCommenting() {
 
 module.exports = injectInlineCommenting;
 
-},{"../memoApi":3}],6:[function(require,module,exports){
+},{"../memoApi":3}],7:[function(require,module,exports){
+function injectRememberPassword() {
+  $('[type="password"]').each((_, password) => {
+    // Load
+    $(password).val(localStorage.memoPassword || "");
+
+    // Save
+    $(password)
+      .closest("form")
+      .submit(() => {
+        localStorage.memoPassword = $(password).val();
+      });
+  });
+}
+
+module.exports = injectRememberPassword;
+
+},{}],8:[function(require,module,exports){
 const MES_STORAGE_KEY = "mes-7932a97f";
 
 const state = JSON.parse(localStorage[MES_STORAGE_KEY] || "{}");
