@@ -6,10 +6,13 @@
     "browserify": "16.2.0",
     "browserify-css": "0.14.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "nodemon": "1.17.3"
+  },
   "scripts": {
-    "build": "browserify -t browserify-css app.js > index.js",
-    "install": "npm run build"
+    "build": "browserify -t browserify-css src/app.js > index.js",
+    "install": "npm run build",
+    "watch-and-copy": "nodemon -w src -w app.css -e js,css -x 'npm run build; cat index.js | pbcopy'"
   },
   "repository": {
     "type": "git",
