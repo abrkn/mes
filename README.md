@@ -32,9 +32,18 @@ Makes Memo.cash more awesome.
 
 Your password is stored in plain text in the browser's `localStorage`. It's probably safe unless your computer is already broken into.
 
-## Technology
+## Development
 
-Not much at all
+Clone this repo:
+
+- `git clone git@github.com:abrkn/mes.git`
+- `cd mes`
+
+MES uses Browserify to package javascript/css into one file, [index.js](index.js).
+
+Run the browserify builder:
+
+- `npm run build`
 
 ## Author
 

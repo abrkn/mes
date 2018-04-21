@@ -1,0 +1,30 @@
+{
+  "name": "mes",
+  "version": "1.0.0",
+  "description": "Memo Enhancement Suite (MES)",
+  "dependencies": {
+    "browserify": "16.2.0",
+    "browserify-css": "0.14.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "build": "browserify -t browserify-css app.js > index.js",
+    "install": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abrkn/mes.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/abrkn/mes/issues"
+  },
+  "homepage": "https://github.com/abrkn/mes#readme",
+  "browserify-css": {
+    "autoInject": false,
+    "minify": false,
+    "rootDir": "."
+  }
+}
