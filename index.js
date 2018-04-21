@@ -15,6 +15,8 @@ const injectInlineCommenting = require("./plugins/inline-commenting");
 const { state, saveState } = require("./state");
 const injectRememberPassword = require("./plugins/remember-password");
 const injectAutoExpandImages = require("./plugins/auto-expand-images");
+const injectFixTipAmountInput = require("./plugins/fix-tip-amount");
+const injectCssStateClasses = require("./plugins/css-state-classes");
 
 const addCss = () => {
   const element = document.createElement("style");
@@ -27,49 +29,13 @@ addCss();
 
 $(() => {
   injectRememberPassword();
-
-  const $formMemoLike = $("#form-memo-like");
-
-  if ($formMemoLike.length) {
-    // Only tip in integers with a minimum of what is stated: "(min. 123)"
-    $formMemoLike.find("input#tip").attr({
-      type: "number",
-      pattern: "d*",
-      min: $('#form-memo-like label[for="tip"]')
-        .text()
-        .match(/(\d+)\)/)[1]
-    });
-  }
-
+  injectFixTipAmountInput();
   injectAutoExpandImages();
-
-  // Add missing css class to "Like Memo" buttons
-  $(`.post .actions a[href^='memo/like']`).addClass("like-button");
-
-  // Add data-txhash to posts
-  $(`.post .actions .like-button`).each((_, a) => {
-    const $a = $(a);
-    const $post = $a.closest(".post");
-    const href = $a.attr("href");
-    const txhash = href.match(/[^\/\?]+$/)[0];
-    $post.attr("data-txhash", txhash);
-  });
-
-  // Remove "Like Memo", which will be done by CSS instead
-  $(`.post .actions .like-button`).html("");
-
-  // Restore likes
-  $(".post[data-txhash]").each((_, post) => {
-    const $post = $(post);
-    const txhash = $post.attr("data-txhash");
-
-    $post.toggleClass("is-liked", !!state.likedPosts[txhash]);
-  });
-
+  injectCssStateClasses();
   injectInlineCommenting();
 });
 
-},{"../app.css":1,"./memoFetch":4,"./plugins/auto-expand-images":5,"./plugins/inline-commenting":6,"./plugins/remember-password":7,"./state":8}],3:[function(require,module,exports){
+},{"../app.css":1,"./memoFetch":4,"./plugins/auto-expand-images":5,"./plugins/css-state-classes":6,"./plugins/fix-tip-amount":7,"./plugins/inline-commenting":8,"./plugins/remember-password":9,"./state":10}],3:[function(require,module,exports){
 const { state, saveState } = require("./state");
 const { fetchCsrf, fetchTmXhr } = require("./memoFetch");
 
@@ -98,7 +64,7 @@ Object.assign(exports, {
   likePostInBackground
 });
 
-},{"./memoFetch":4,"./state":8}],4:[function(require,module,exports){
+},{"./memoFetch":4,"./state":10}],4:[function(require,module,exports){
 const fetchTmXhr = req =>
   new Promise((resolve, reject) => {
     if (!req.url.match(/^http/)) {
@@ -169,6 +135,54 @@ function injectAutoExpandImages() {
 module.exports = injectAutoExpandImages;
 
 },{}],6:[function(require,module,exports){
+const { state, saveState } = require("../state");
+
+function injectCssStateClasses() {
+  // Add missing css class to "Like Memo" buttons
+  $(`.post .actions a[href^='memo/like']`).addClass("like-button");
+
+  // Add data-txhash to posts
+  $(`.post .actions .like-button`).each((_, a) => {
+    const $a = $(a);
+    const $post = $a.closest(".post");
+    const href = $a.attr("href");
+    const txhash = href.match(/[^\/\?]+$/)[0];
+    $post.attr("data-txhash", txhash);
+  });
+
+  // Remove "Like Memo", which will be done by CSS instead
+  $(`.post .actions .like-button`).html("");
+
+  // Restore likes
+  $(".post[data-txhash]").each((_, post) => {
+    const $post = $(post);
+    const txhash = $post.attr("data-txhash");
+
+    $post.toggleClass("is-liked", !!state.likedPosts[txhash]);
+  });
+}
+
+module.exports = injectCssStateClasses;
+
+},{"../state":10}],7:[function(require,module,exports){
+function injectFixTipAmount() {
+  const $formMemoLike = $("#form-memo-like");
+
+  if ($formMemoLike.length) {
+    // Only tip in integers with a minimum of what is stated: "(min. 123)"
+    $formMemoLike.find("input#tip").attr({
+      type: "number",
+      pattern: "d*",
+      min: $('#form-memo-like label[for="tip"]')
+        .text()
+        .match(/(\d+)\)/)[1]
+    });
+  }
+}
+
+module.exports = injectFixTipAmount;
+
+},{}],8:[function(require,module,exports){
 const { likePostInBackground } = require("../memoApi");
 
 function injectInlineCommenting() {
@@ -202,7 +216,7 @@ function injectInlineCommenting() {
 
 module.exports = injectInlineCommenting;
 
-},{"../memoApi":3}],7:[function(require,module,exports){
+},{"../memoApi":3}],9:[function(require,module,exports){
 function injectRememberPassword() {
   $('[type="password"]').each((_, password) => {
     // Load
@@ -219,7 +233,7 @@ function injectRememberPassword() {
 
 module.exports = injectRememberPassword;
 
-},{}],8:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 const MES_STORAGE_KEY = "mes-7932a97f";
 
 const state = JSON.parse(localStorage[MES_STORAGE_KEY] || "{}");
