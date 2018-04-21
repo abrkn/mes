@@ -1,29 +1,6 @@
 const { fetchTmXhr, fetchCsrf } = require("./memoFetch");
-
-const MES_STORAGE_KEY = "mes-7932a97f";
-
-const state = JSON.parse(localStorage[MES_STORAGE_KEY] || "{}");
-
-const likePostInBackground = async (txhash, tip = 0) => {
-  const { memoPassword: password } = localStorage;
-  const csrf = await fetchCsrf(`memo/like/${txhash}`);
-  const tipForQuery = (+tip || "").toString();
-
-  await fetchTmXhr({
-    url: "memo/like-submit",
-    data: `txHash=${txhash}&tip=${tipForQuery}&password=${password}`,
-    csrf
-  });
-
-  const prevTip = state.likedPosts[txhash] ? state.likedPosts[txhash].tip || 0 : 0;
-
-  state.likedPosts[txhash] = {
-    timestamp: +new Date(),
-    tip: prevTip + +tip
-  };
-
-  saveState();
-};
+const injectInlineCommenting = require("./plugins/inline-commenting");
+const { state, saveState } = require("./state");
 
 const addCss = () => {
   const element = document.createElement("style");
@@ -33,17 +10,6 @@ const addCss = () => {
 };
 
 addCss();
-
-// Defaults for state
-Object.assign(state, {
-  likedPosts: state.likedPosts || {}
-});
-
-console.log({ state });
-
-const saveState = () => {
-  localStorage[MES_STORAGE_KEY] = JSON.stringify(state, null, 2);
-};
 
 $(() => {
   // Remember password
@@ -108,31 +74,5 @@ $(() => {
     $post.toggleClass("is-liked", !!state.likedPosts[txhash]);
   });
 
-  // In-line-comment
-  $(`.post .actions .like-button`).click(e => {
-    const $a = $(e.target);
-    const $post = $a.closest(".post");
-    const href = $a.attr("href");
-    const txhash = href.match(/[^\/\?]+$/)[0]; // TODO: Duplicate
-    const { memoPassword: password } = localStorage;
-
-    const tipText = prompt("How much tip in satoshis? (Blank=0)", "0");
-
-    if (tipText === null) {
-      return false;
-    }
-    $post.addClass("is-liking");
-
-    likePostInBackground(txhash, tipText)
-      .then(() => {
-        $post.removeClass("is-liking");
-        $post.addClass("is-liked");
-      })
-      .catch(error => {
-        $post.removeClass("is-liking");
-        alert(`Failed to like: ${error.message || error.stack || error}!`);
-      });
-
-    return false;
-  });
+  injectInlineCommenting();
 });
