@@ -1,11 +1,12 @@
 {
   "name": "mes",
-  "version": "0.3.13",
+  "version": "0.3.14",
   "description": "Memo Enhancement Suite (MES)",
   "dependencies": {
     "browserify": "16.2.0",
     "browserify-css": "0.14.0",
     "lodash.get": "4.4.2",
+    "node-emoji": "1.8.1",
     "scssify": "3.0.1"
   },
   "devDependencies": {
