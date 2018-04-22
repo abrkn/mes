@@ -5,7 +5,6 @@ function injectCssStateClasses() {
   $(`.post .actions a[href^='memo/like']`).addClass('like-button');
 
   //add class to secondary nav buttons
-  $(`.nav a[href^='protocol']`).addClass('protocol-button');
   $(`.nav a[href^='disclaimer']`).addClass('disclaimer-button');
   $(`.nav a[href="logout"]`).addClass('logout-button');
 
@@ -14,10 +13,16 @@ function injectCssStateClasses() {
 
 
   //add my-profile class
-  $(`html a[href*="profile/"]`).addClass('new-memo-inner-button');
+  $(`html a[href*="profile/"]`).addClass('profile-button');
+  $(`table a[href*="profile/"], h2 a[href*="profile/"]`).removeClass('profile-button');
+
+  // remove from name links
+  $(`html a[href="/profile/1F5GrRezwGokQhxmF4fYaBbbNrPPaeBqMm"], html .name a[href*="profile/"]`).addClass('post-profile-button');
+
+
     
   //add footer-button to lower buttons
-  $(`html a[href="/introducing-memo"], html a[href="/profile/1F5GrRezwGokQhxmF4fYaBbbNrPPaeBqMm"], html a[href="/stats"]`).addClass('footer-button');
+  $(`html a[href="/introducing-memo"], html a[href="/profile/1F5GrRezwGokQhxmF4fYaBbbNrPPaeBqMm"], html a[href="/stats"], html a[href^='protocol']`).addClass('footer-button');
 
   //add outline-button to dashboard buttons
   $(`html a[href="key/change-password"], html a[href="key/export"], html a[href="memo/set-name"]`).addClass('outline-button');

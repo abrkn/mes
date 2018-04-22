@@ -151,7 +151,7 @@ html {
                 display: inline-block;
                 line-height: 1;
                 margin: 0;
-                padding: 0 40px 0 0;
+                padding: 0 70px 0 0;
             }
 
             img {
@@ -289,11 +289,18 @@ body .new-memo-inner-button {
     margin-left:-200px;
 }
 
-body .new-memo-inner-button {
+body .profile-button {
     display: block;
     width: 400px;
     margin: 10px auto;
     background: #888;
+}
+
+body .profile-button.post-profile-button {
+    display:inline-block;
+    width:auto;
+    margin:0;
+    background:none;
 }
 
 html a[href="key/change-password"], html a[href="key/export"], html a[href="memo/set-name"], html a.outline-button {
@@ -310,7 +317,7 @@ html a[href="key/change-password"]:hover, html a[href="key/export"]:hover, html 
 
 /* Footer */
 
-html a[href="/introducing-memo"], html a[href="/profile/1F5GrRezwGokQhxmF4fYaBbbNrPPaeBqMm"], html a[href="/stats"], .footer-button {
+html a[href="/introducing-memo"], html a[href="/profile/1F5GrRezwGokQhxmF4fYaBbbNrPPaeBqMm"], html a[href="/stats"], body .footer-button {
   background:#ccc;
 }
 
