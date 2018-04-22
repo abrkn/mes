@@ -150,13 +150,25 @@ html {
             h1 {
                 display: inline-block;
                 line-height: 1;
-                margin: 0;
-                padding: 0 70px 0 0;
+                float:left;
+                padding-left:5px;
+                padding-top:5px;
             }
+
 
             img {
                 vertical-align: middle;
                 margin-top: -5px;
+            }
+
+            .nav {
+                .btn {
+                }
+                a.logout-button {
+                   background: #B5B5B5;
+                   color: #fff;
+                   position: relative;
+                }
             }
         }
     }
@@ -182,13 +194,6 @@ body .disclaimer-button {
     bottom: 0;
 }
 
-html a[href="logout"], body .logout-button {
-  position:absolute;
-  top:0px;
-  background:#b5b5b5;
-  left:5px;
-  position:absolute;
-}
 
 /* Post and Profile */
 
@@ -219,12 +224,6 @@ body #profile-list .btn:hover, body #profile-list .btn:focus {
 
 body #profile-list p {
     margin: 0;
-}
-
-body .header h1 {
-    display: block;
-    margin: 15px 0;
-    text-align: center;
 }
 
 body .header, body {
