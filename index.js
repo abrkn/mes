@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         mes
 // @namespace    https://github.com/abrkn/mes#readme
-// @version      0.3.11
+// @version      0.3.12
 // @description  Memo Enhancement Suite (MES)
 // @author       Andreas Brekken: https://memo.cash/profile/149o1esm1LrYEy1DizZgxANSppx3FESHKw
 // @match        https://memo.cash/*
@@ -1122,6 +1122,14 @@ function injectAutoExpandImages() {
       if (imgFlipId) {
         const imgFlipSrc = `https://i.imgflip.com/${imgFlipId}.jpg`;
         $el.html(createImg(imgFlipSrc));
+      }
+
+      // Imgur
+      const imgurId = get(href.match(/https?:\/\/i\.imgur\.com\/([a-z0-9]+)/i), '1');
+
+      if (imgurId) {
+        const imgurSrc = `https://i.imgur.com/${imgurId}.jpg`;
+        $el.html(createImg(imgurSrc));
       }
     });
 
