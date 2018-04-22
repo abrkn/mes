@@ -29,6 +29,14 @@ function injectAutoExpandImages() {
         const imgFlipSrc = `https://i.imgflip.com/${imgFlipId}.jpg`;
         $el.html(createImg(imgFlipSrc));
       }
+
+      // Imgur
+      const imgurId = get(href.match(/https?:\/\/i\.imgur\.com\/([a-z0-9]+)/i), '1');
+
+      if (imgurId) {
+        const imgurSrc = `https://i.imgur.com/${imgurId}.jpg`;
+        $el.html(createImg(imgurSrc));
+      }
     });
 
     // YouTube short-hand
