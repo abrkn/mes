@@ -31,7 +31,7 @@ function injectAutoExpandImages() {
       }
 
       // Imgur
-      const imgurId = get(href.match(/https?:\/\/i\.imgur\.com\/([a-z0-9]+)/i), '1');
+      const imgurId = get(href.match(/https?:\/\/(?:i\.)?imgur\.com\/([a-z0-9]+)/i), '1');
 
       if (imgurId) {
         const imgurSrc = `https://i.imgur.com/${imgurId}.jpg`;
