@@ -12,6 +12,10 @@ Makes Memo.cash more awesome. Join us on Telegram: [https://t.me/EnhanceMemo](ht
 
 ## Features
 
+### Update to layout and design
+
+![](https://user-images.githubusercontent.com/3764321/39086668-27983e52-45d0-11e8-8615-ac933398bc92.png)
+
 ### Auto expand images and gifs
 
 ![](https://i.gyazo.com/b2fdf429dc6c5b1fd44f2f28ba6c5b09.gif)
