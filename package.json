@@ -20,9 +20,10 @@
   "scripts": {
     "build:browserify": "browserify -t scssify -t browserify-css src/app.js > build/app.js",
     "build:userscript-header": "node scripts/userscript-header.js > build/userscript-header.js",
-    "build": "run-s build:browserify build:userscript-header; cat build/userscript-header.js build/app.js > index.js",
+    "build": "run-s build:browserify build:userscript-header; cat build/userscript-header.js build/app.js > dist/bundle.js",
     "install": "npm run build",
-    "watch-and-copy": "nodemon -w src -w app.css -e js,css -x 'npm run build; cat index.js | pbcopy'"
+    "watch-and-copy": "nodemon -w src -w app.css -e js,css -x 'npm run build; cat dist/bundle.js | pbcopy'",
+    "test": "echo todo"
   },
   "repository": {
     "type": "git",
