@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         mes
 // @namespace    https://github.com/abrkn/mes#readme
-// @version      0.3.14
+// @version      0.3.15
 // @description  Memo Enhancement Suite (MES)
 // @author       Andreas Brekken: https://memo.cash/profile/149o1esm1LrYEy1DizZgxANSppx3FESHKw
 // @match        https://memo.cash/*
