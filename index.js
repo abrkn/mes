@@ -1150,14 +1150,6 @@ function injectCssStateClasses() {
   // Add missing css class to "Like Memo" buttons
   $(`.post .actions a[href^='memo/like']`).addClass('like-button');
 
-
-  // $('.post').each(function () {
-  //     $('.message').each(function () {
-  //         var innerguts = $(this).contents();
-  //         innerguts = innerguts.replace(/(\n)+/g, '<br />');
-  //     })
-  // })
-
   //add class to secondary nav buttons
   $(`.nav a[href^='disclaimer']`).addClass('disclaimer-button');
   $(`.nav a[href="logout"]`).addClass('logout-button');
@@ -1172,6 +1164,8 @@ function injectCssStateClasses() {
 
   // remove from name links
   $(`html a[href="/profile/1F5GrRezwGokQhxmF4fYaBbbNrPPaeBqMm"], html .name a[href*="profile/"]`).addClass('post-profile-button');
+
+
     
   //add footer-button to lower buttons
   $(`html a[href="/introducing-memo"], html a[href="/profile/1F5GrRezwGokQhxmF4fYaBbbNrPPaeBqMm"], html a[href="/stats"], html a[href^='protocol']`).addClass('footer-button');
