@@ -21,7 +21,6 @@
     "build:browserify": "browserify -t scssify -t browserify-css src/app.js > build/app.js",
     "build:userscript-header": "node scripts/userscript-header.js > build/userscript-header.js",
     "build": "mkdir -p build dist && run-s build:browserify build:userscript-header; cat build/userscript-header.js build/app.js > dist/bundle.js",
-    "install": "npm run build",
     "watch-and-copy": "nodemon -w src -w app.css -e js,css -x 'npm run build; cat dist/bundle.js | pbcopy'",
     "test": "echo todo"
   },
@@ -43,8 +42,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged && npm run build",
-      "pre-push": "git fetch origin"
+      "pre-commit": "lint-staged"
     }
   },
   "prettier": {
