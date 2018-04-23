@@ -26,8 +26,10 @@ Click **Dashboard**
 Copy this to your clipboard (CTRL+C or CMD+C)
 
 ```
-https://github.com/abrkn/mes/raw/master/index.js
+https://s3.us-west-2.amazonaws.com/enhance-memo/bundle.js
 ```
+
+**NOTE** This URL has changed since screenshos were taken. Use the one above.
 
 Click **Utilities**
 
