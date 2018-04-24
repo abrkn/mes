@@ -292,11 +292,23 @@ body .new-memo-inner-button {
     margin-left:-200px;
 }
 
-body .profile-button {
-    display: block;
-    width: 400px;
-    margin: 10px auto;
-    background: #888;
+body .profile-button, body p.name .profile-button {
+    background: #fff;
+    display: inline-block;
+    margin: 0;
+    width: auto;
+}
+
+body p .profile-button {
+    background: #fff;
+    border:1px solid #888;
+    color:#888;
+}
+
+body p .profile-button:hover, body p .profile-button:focus {
+    background: #fff;
+    border-color: #999;
+    color: #999;
 }
 
 body .profile-button.post-profile-button {
