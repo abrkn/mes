@@ -301,8 +301,11 @@ body .profile-button, body p.name .profile-button {
 
 body p .profile-button {
     background: #fff;
-    border:1px solid #888;
     color:#888;
+}
+
+body > p:nth-child(9) > a.btn.profile-button {
+        border:1px solid #888;
 }
 
 body p .profile-button:hover, body p .profile-button:focus {
