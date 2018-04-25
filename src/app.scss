@@ -292,11 +292,26 @@ body .new-memo-inner-button {
     margin-left:-200px;
 }
 
-body .profile-button {
-    display: block;
-    width: 400px;
-    margin: 10px auto;
-    background: #888;
+body .profile-button, body p.name .profile-button {
+    background: #fff;
+    display: inline-block;
+    margin: 0;
+    width: auto;
+}
+
+body p .profile-button {
+    background: #fff;
+    color:#888;
+}
+
+body > p:nth-child(9) > a.btn.profile-button {
+        border:1px solid #888;
+}
+
+body p .profile-button:hover, body p .profile-button:focus {
+    background: #fff;
+    border-color: #999;
+    color: #999;
 }
 
 body .profile-button.post-profile-button {
@@ -323,3 +338,23 @@ html a[href="/introducing-memo"], html a[href="/profile/1F5GrRezwGokQhxmF4fYaBbb
   background:#ccc;
 }
 
+
+@media only screen and (max-width: 920px) {
+
+
+    html body .new-memo-button {
+        position:relative;
+        right:0;
+    }
+
+}
+
+
+@media only screen and (max-width: 640px) {
+    
+    html body .new-memo-button {
+        position:absolute;
+        right:5px;
+    }        
+
+}
