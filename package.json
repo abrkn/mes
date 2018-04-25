@@ -1,13 +1,14 @@
 {
   "name": "mes",
-  "version": "0.3.16",
+  "version": "0.3.18",
   "description": "Memo Enhancement Suite (MES)",
   "dependencies": {
     "browserify": "16.2.0",
     "browserify-css": "0.14.0",
     "lodash.get": "4.4.2",
     "node-emoji": "1.8.1",
-    "scssify": "3.0.1"
+    "scssify": "3.0.1",
+    "semver": "5.5.0"
   },
   "devDependencies": {
     "husky": "1.0.0-rc.1",
@@ -20,7 +21,7 @@
   "scripts": {
     "build:browserify": "browserify -t scssify -t browserify-css src/app.js > build/app.js",
     "build:userscript-header": "node scripts/userscript-header.js > build/userscript-header.js",
-    "build": "mkdir -p build dist && run-s build:browserify build:userscript-header; cat build/userscript-header.js build/app.js > dist/bundle.js && cp dist/bundle.js index.js",
+    "build": "mkdir -p build dist && run-s build:browserify build:userscript-header; cat build/userscript-header.js build/app.js > dist/bundle.js",
     "watch-and-copy": "nodemon -w src -w app.css -e js,css -x 'npm run build; cat dist/bundle.js | pbcopy'",
     "test": "echo todo"
   },

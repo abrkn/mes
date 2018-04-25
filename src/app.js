@@ -4,6 +4,7 @@ const injectAutoExpandImages = require('./plugins/auto-expand-images');
 const injectFixTipAmountInput = require('./plugins/fix-tip-amount');
 const injectCssStateClasses = require('./plugins/css-state-classes');
 const injectExpandEmojis = require('./plugins/expand-emojis');
+const enforceS3UpdateUrlChange = require('./plugins/enforce-s3-update-url-change');
 
 const addCss = () => {
   const element = document.createElement('style');
@@ -15,6 +16,7 @@ const addCss = () => {
 addCss();
 
 $(() => {
+  enforceS3UpdateUrlChange();
   injectRememberPassword();
   injectFixTipAmountInput();
   injectAutoExpandImages();
