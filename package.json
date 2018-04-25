@@ -1,11 +1,12 @@
 {
   "name": "mes",
-  "version": "0.3.11",
+  "version": "0.3.26",
   "description": "Memo Enhancement Suite (MES)",
   "dependencies": {
     "browserify": "16.2.0",
     "browserify-css": "0.14.0",
     "lodash.get": "4.4.2",
+    "node-emoji": "1.8.1",
     "scssify": "3.0.1"
   },
   "devDependencies": {
@@ -19,9 +20,9 @@
   "scripts": {
     "build:browserify": "browserify -t scssify -t browserify-css src/app.js > build/app.js",
     "build:userscript-header": "node scripts/userscript-header.js > build/userscript-header.js",
-    "build": "run-s build:browserify build:userscript-header; cat build/userscript-header.js build/app.js > index.js",
-    "install": "npm run build",
-    "watch-and-copy": "nodemon -w src -w app.css -e js,css -x 'npm run build; cat index.js | pbcopy'"
+    "build": "mkdir -p build dist && run-s build:browserify build:userscript-header; cat build/userscript-header.js build/app.js > dist/bundle.js",
+    "watch-and-copy": "nodemon -w src -w app.css -e js,css -x 'npm run build; cat dist/bundle.js | pbcopy'",
+    "test": "echo todo"
   },
   "repository": {
     "type": "git",
@@ -41,8 +42,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged && npm run build",
-      "pre-push": "git fetch origin"
+      "pre-commit": "lint-staged"
     }
   },
   "prettier": {
@@ -56,5 +56,8 @@
       "prettier --write",
       "git add"
     ]
+  },
+  "engines": {
+    "node": "9.9.0"
   }
 }

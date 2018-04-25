@@ -29,6 +29,23 @@ function injectAutoExpandImages() {
         const imgFlipSrc = `https://i.imgflip.com/${imgFlipId}.jpg`;
         $el.html(createImg(imgFlipSrc));
       }
+
+      // Imgur
+      const imgurId = get(href.match(/https?:\/\/(?:i\.)?imgur\.com\/([a-z0-9]+)/i), '1');
+
+      if (imgurId) {
+        const imgurSrc = `https://i.imgur.com/${imgurId}.jpg`;
+        $el.html(createImg(imgurSrc));
+      }
+
+      // YouTube short-link
+      const youTubeId = get(href.match(/https?:\/\/youtu.be\/([\w]+)/i), '1');
+
+      if (youTubeId) {
+        $el.html(
+          `<iframe src="https://www.youtube.com/embed/${youTubeId}?html5=1" width=414 height=233 style="margin:10px auto; display:block;border:0;"></iframe>`
+        );
+      }
     });
 
     // YouTube short-hand

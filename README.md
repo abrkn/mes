@@ -6,6 +6,8 @@
 
 Or [click here to upgrade](UPGRADE.md)
 
+[ ![Codeship Status for abrkn/mes](https://app.codeship.com/projects/add18470-28dc-0136-5ebd-16b02a4dbee4/status?branch=master)](https://app.codeship.com/projects/287173)
+
 ## About
 
 Makes Memo.cash more awesome. Join us on Telegram: [https://t.me/EnhanceMemo](https://t.me/EnhanceMemo)
