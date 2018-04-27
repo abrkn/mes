@@ -1,12 +1,11 @@
 const { likePostInBackground } = require('../memoApi');
 
-function injectInlineCommenting() {
+function injectInlineLike() {
   $(`.post .actions .like-button`).click(e => {
     const $a = $(e.target);
     const $post = $a.closest('.post');
     const href = $a.attr('href');
     const txhash = href.match(/[^\/\?]+$/)[0]; // TODO: Duplicate
-    const { memoPassword: password } = localStorage;
 
     const tipText = prompt('How much tip in satoshis? (Blank=0)', '0');
 
@@ -29,4 +28,4 @@ function injectInlineCommenting() {
   });
 }
 
-module.exports = injectInlineCommenting;
+module.exports = injectInlineLike;

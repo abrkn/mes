@@ -1,9 +1,10 @@
-const injectInlineCommenting = require('./plugins/inline-commenting');
+const injectInlineLike = require('./plugins/inline-like');
 const injectRememberPassword = require('./plugins/remember-password');
 const injectAutoExpandImages = require('./plugins/auto-expand-images');
 const injectFixTipAmountInput = require('./plugins/fix-tip-amount');
 const injectCssStateClasses = require('./plugins/css-state-classes');
 const injectExpandEmojis = require('./plugins/expand-emojis');
+const injectInlineReply = require('./plugins/inline-reply');
 
 const addCss = () => {
   const element = document.createElement('style');
@@ -19,6 +20,7 @@ $(() => {
   injectFixTipAmountInput();
   injectAutoExpandImages();
   injectCssStateClasses();
-  injectInlineCommenting();
+  injectInlineLike();
   injectExpandEmojis();
+  injectInlineReply();
 });
