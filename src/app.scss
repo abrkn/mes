@@ -93,6 +93,8 @@ body .btn, .btn-primary.btn-block, body input[type=submit].btn {
     content: "⌛ Liking Memo...";
 }
 
+
+
 // Reply
 
 .is-disabled, .post.is-replying .actions .reply-button, .post.is-replied .actions .reply-button {
@@ -296,10 +298,14 @@ html .post {
             padding:15px 10px;
         }
 
-        .identicon {
+        
+    }
+}
+
+body {
+    img.identicon {
             display:none;
         }
-    }
 }
 
 body .post .btn-leave {
