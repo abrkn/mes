@@ -1,6 +1,6 @@
 {
   "name": "mes",
-  "version": "0.3.118",
+  "version": "0.3.119",
   "description": "Memo Enhancement Suite (MES)",
   "dependencies": {
     "browserify": "16.2.0",
