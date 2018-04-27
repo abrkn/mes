@@ -20,6 +20,12 @@ body .btn:hover, .btn:focus {
     background: #bfe498;
 }
 
+body {
+    a.btn, input[type=submit].btn {
+        box-shadow:none;
+    }
+}
+
 body table {
     margin: 65px auto 0;
 }
@@ -86,6 +92,8 @@ body .btn, .btn-primary.btn-block, body input[type=submit].btn {
 .post.is-liking .actions .like-button:after {
     content: "⌛ Liking Memo...";
 }
+
+
 
 // Reply
 
@@ -193,6 +201,7 @@ html {
 
             .nav {
                 .btn {
+
                 }
                 a.logout-button {
                    background: #B5B5B5;
@@ -276,6 +285,27 @@ html .post {
     max-width: 888px;
     text-align: left;
     margin: 25px auto;
+
+    .post-header {
+        background:none;
+        margin:0;
+        padding:0;
+        border-radius:0;
+
+        .reply-header {
+            background:#ccc;
+            margin: 0;
+            padding:15px 10px;
+        }
+
+        
+    }
+}
+
+body {
+    img.identicon {
+            display:none;
+        }
 }
 
 body .post .btn-leave {
