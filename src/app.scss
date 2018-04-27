@@ -60,6 +60,8 @@ body .btn, .btn-primary.btn-block, body input[type=submit].btn {
 
 /* Actions */
 
+// Like
+
 .is-disabled, .post.is-liking .actions .like-button, .post.is-liked .actions .like-button {
     cursor: not-allowed;
     pointer-events: none;
@@ -84,6 +86,34 @@ body .btn, .btn-primary.btn-block, body input[type=submit].btn {
 .post.is-liking .actions .like-button:after {
     content: "⌛ Liking Memo...";
 }
+
+// Reply
+
+.is-disabled, .post.is-replying .actions .reply-button, .post.is-replied .actions .reply-button {
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.post .actions .reply-button:after {
+    content: "Reply";
+}
+
+.post.is-replied .actions .reply-button {
+    background-color: rgba(0,0,0,0.2);
+}
+
+.post.is-replied .actions .reply-button:after {
+    content: "👍 Replied";
+}
+
+.post.is-replying .actions .reply-button {
+    background-color: rgba(84,141,29,0.75);
+}
+
+.post.is-replying .actions .reply-button:after {
+    content: "⌛ Replying...";
+}
+
 
 /* Inputs */
 

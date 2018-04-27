@@ -22,6 +22,25 @@ const likePostInBackground = async (txhash, tip = 0) => {
   saveState();
 };
 
+const replyToPostInBackground = async (txhash, message) => {
+  const { memoPassword: password } = localStorage;
+  const csrf = await fetchCsrf(`memo/like/${txhash}`);
+
+  await fetchTmXhr({
+    url: 'memo/reply-submit',
+    data: `txHash=${txhash}&message=${message}&password=${password}`,
+    csrf,
+  });
+
+  state.myReplies.push({
+    parentTxhash: txhash,
+    timestamp: +new Date(),
+  });
+
+  saveState();
+};
+
 Object.assign(exports, {
   likePostInBackground,
+  replyToPostInBackground,
 });

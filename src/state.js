@@ -4,6 +4,7 @@ const state = JSON.parse(localStorage[MES_STORAGE_KEY] || '{}');
 
 Object.assign(state, {
   likedPosts: state.likedPosts || {},
+  myReplies: state.myReplies || [],
 });
 
 console.log({ state });
