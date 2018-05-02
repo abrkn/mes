@@ -93,7 +93,23 @@ body .btn, .btn-primary.btn-block, body input[type=submit].btn {
     content: "⌛ Liking Memo...";
 }
 
+.post {
+    .like-tip {
+        display: none;
 
+        input {
+            vertical-align: inherit;
+            max-width: 60px;
+            font-size: 0.8em;
+        }
+    }
+
+    &.is-showing-like-tip {
+        .like-tip {
+            display: inline;
+        }
+    }
+}
 
 // Reply
 
